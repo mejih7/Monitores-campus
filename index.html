@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Fútbol Sala — Monitores</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,sans-serif;
+  background:#16213E;
+  background-image:radial-gradient(circle at 20% 0%, rgba(83,74,183,.35), transparent 50%),
+                    radial-gradient(circle at 85% 90%, rgba(216,90,48,.25), transparent 50%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px 18px;
+  color:#fff;
+}
+.wrap{width:100%;max-width:420px}
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:#A9A9D4;
+  margin-bottom:16px;
+}
+h1{
+  font-size:30px;
+  font-weight:800;
+  line-height:1.15;
+  margin-bottom:8px;
+  letter-spacing:-.5px;
+}
+h1 span{color:#FFB74D}
+.sub{
+  font-size:14px;
+  color:#B8B8D0;
+  margin-bottom:36px;
+  line-height:1.5;
+}
+.cards{display:flex;flex-direction:column;gap:14px}
+.card{
+  display:block;
+  text-decoration:none;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:22px 20px;
+  transition:transform .15s, background .15s;
+  position:relative;
+  overflow:hidden;
+}
+.card:active{transform:scale(.97)}
+.card-1{background:linear-gradient(135deg, rgba(216,90,48,.18), rgba(255,255,255,.04))}
+.card-2{background:linear-gradient(135deg, rgba(176,120,0,.22), rgba(255,255,255,.04))}
+.card-icon{font-size:32px;margin-bottom:10px;display:block}
+.card-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+.card-desc{font-size:12.5px;color:#C0C0D8;line-height:1.5}
+.card-arrow{
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  color:rgba(255,255,255,.35);
+}
+.footer{
+  margin-top:40px;
+  text-align:center;
+  font-size:11px;
+  color:rgba(255,255,255,.3);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Staff · Uso interno</span>
+  <h1>Campus<br>Futbol <span>Sala</span></h1>
+  <p class="sub">Toda la información del campus para monitores, en un solo sitio.</p>
+
+  <div class="cards">
+    <a href="planning.html" class="card card-1">
+      <span class="card-icon">📅</span>
+      <div class="card-title">Planning completo</div>
+      <div class="card-desc">Calendario, horarios por grupo, responsables, guardias y listado de jugadores.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a href="puntuacion.html" class="card card-2">
+      <span class="card-icon">🏆</span>
+      <div class="card-title">Puntuación y ranking</div>
+      <div class="card-desc">Puntúa actitud, participación, compañerismo y juegos. Ranking en vivo.</div>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+  <p class="footer">Guarda este enlace en tu pantalla de inicio para acceso rápido</p>
+</div>
+</body>
+</html>

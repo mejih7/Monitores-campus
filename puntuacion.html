@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus — Puntuación</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;padding:12px;background:#F8F9FA;color:#1a1a1a;font-size:14px;padding-bottom:80px}
+.header{text-align:center;padding:14px 0 18px}
+.header h1{font-size:19px;font-weight:700;color:#2C3E50}
+.header p{font-size:12px;color:#888;margin-top:2px}
+
+.mtabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid #e0e0e0;padding-bottom:10px}
+.mt{flex:1;padding:9px 8px;font-size:12px;font-weight:600;border-radius:8px;border:.5px solid #ccc;background:transparent;color:#666;cursor:pointer;text-align:center}
+.mt.active{color:#fff;border-color:transparent}
+.mt-pt.active{background:#2C3E50}
+.mt-rk.active{background:#B07800}
+.mpanel{display:none}
+.mpanel.active{display:block}
+
+/* PUNTUAR */
+.toggle-row{display:flex;gap:6px;margin-bottom:14px;background:#EEE;border-radius:10px;padding:4px}
+.toggle-btn{flex:1;padding:9px;font-size:13px;font-weight:600;border-radius:8px;border:none;background:transparent;color:#666;cursor:pointer}
+.toggle-btn.active{background:#fff;color:#2C3E50;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+
+.sel-label{font-size:12px;color:#666;margin-bottom:6px;display:block;font-weight:500}
+.sel-box{width:100%;font-size:14px;padding:11px 13px;border-radius:10px;border:1px solid #ccc;margin-bottom:16px;background:#fff;color:#1a1a1a}
+
+.cat-card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #e8e8e8;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.cat-name{font-size:14px;font-weight:600;color:#2C3E50;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.stars{display:flex;gap:6px}
+.star{font-size:30px;cursor:pointer;color:#ddd;transition:transform .1s}
+.star.filled{color:#FFC107}
+.star:active{transform:scale(1.2)}
+
+.monitor-label{font-size:12px;color:#666;margin-bottom:6px;display:block;font-weight:500}
+.monitor-input{width:100%;font-size:14px;padding:11px 13px;border-radius:10px;border:1px solid #ccc;margin-bottom:16px;background:#fff}
+
+.save-btn{width:100%;padding:14px;font-size:15px;font-weight:700;color:#fff;background:#2C6B3F;border:none;border-radius:12px;cursor:pointer;margin-top:6px}
+.save-btn:active{background:#1F4E2D}
+.save-btn:disabled{background:#ccc}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2C6B3F;color:#fff;padding:12px 24px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;transition:opacity .3s;pointer-events:none;z-index:100}
+.toast.show{opacity:1}
+
+/* RANKING */
+.rk-toggle{display:flex;gap:6px;margin-bottom:14px;background:#EEE;border-radius:10px;padding:4px}
+.rk-tab{flex:1;padding:8px;font-size:12px;font-weight:600;border-radius:8px;border:none;background:transparent;color:#666;cursor:pointer}
+.rk-tab.active{background:#fff;color:#2C3E50;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+
+.rk-item{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid #eee}
+.rk-pos{font-size:16px;font-weight:800;width:28px;text-align:center;color:#888}
+.rk-pos.gold{color:#D4A017}
+.rk-pos.silver{color:#9C9C9C}
+.rk-pos.bronze{color:#B5651D}
+.rk-info{flex:1}
+.rk-name{font-size:14px;font-weight:600;color:#1a1a1a}
+.rk-sub{font-size:11px;color:#999;margin-top:1px}
+.rk-score{font-size:16px;font-weight:800;color:#2C6B3F}
+.rk-score-sub{font-size:10px;color:#999;text-align:right}
+.rk-empty{text-align:center;padding:40px 0;color:#aaa;font-size:13px}
+.rk-item.top3{border:1.5px solid #FFD700;background:linear-gradient(135deg,#FFFDF5,#FFF9E6)}
+.rk-band{display:inline-flex;align-items:center;gap:3px;background:#FFD700;color:#5A4200;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:8px;margin-top:3px}
+.refresh-note{text-align:center;font-size:11px;color:#aaa;margin-top:10px}
+.loading{text-align:center;padding:30px;color:#aaa;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏆 Puntuación del Campus</h1>
+  <p>Puntúa actitud, participación, compañerismo y juegos</p>
+</div>
+
+<div class="mtabs">
+  <button class="mt mt-pt active" onclick="sM('pt',this)">⭐ Puntuar</button>
+  <button class="mt mt-rk" onclick="sM('rk',this)">🏆 Ranking</button>
+</div>
+
+<!-- PUNTUAR -->
+<div class="mpanel active" id="mp-pt">
+
+  <div class="toggle-row">
+    <button class="toggle-btn active" id="tgl-grupo" onclick="setModo('grupo')">👥 Grupo</button>
+    <button class="toggle-btn" id="tgl-jugador" onclick="setModo('jugador')">🧑 Jugador</button>
+  </div>
+
+  <span class="sel-label" id="grupo-label">Selecciona el grupo</span>
+  <select class="sel-box" id="sel-grupo" onchange="onGrupoChange()"></select>
+
+  <div id="jugador-select-wrap" style="display:none">
+    <span class="sel-label">Selecciona el jugador</span>
+    <select class="sel-box" id="sel-jugador"></select>
+  </div>
+
+  <div id="cats-container"></div>
+
+  <span class="monitor-label">Tu nombre (monitor)</span>
+  <input class="monitor-input" id="monitor-name" type="text" placeholder="Ej: Paula" />
+
+  <button class="save-btn" id="save-btn" onclick="guardarPuntuacion()">Guardar puntuación</button>
+</div>
+
+<!-- RANKING -->
+<div class="mpanel" id="mp-rk">
+  <div class="rk-toggle">
+    <button class="rk-tab active" onclick="setRankMode('grupo',this)">👥 Grupos</button>
+    <button class="rk-tab" onclick="setRankMode('jugador',this)">🧑 Jugadores</button>
+  </div>
+  <div id="ranking-container"><div class="loading">Cargando...</div></div>
+  <div class="refresh-note">Se actualiza automáticamente · pull-to-refresh si no ves cambios</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== DATOS =====================
+var GRUPOS = [
+  "Alevi Masc 1","Alevi Masc 2","Alevi Masc 3","Alevi Masc 4",
+  "Infantil Masc 1","Infantil Masc 2","Infantil Masc 3","Infantil Masc 4",
+  "Cadet Fem 1","Infantil Fem 1","Infantil Fem 2","Alevi Fem 1"
+];
+
+var JUGADORES = {
+  "Alevi Masc 1": ["Iker Membrives","Jan Serano","Sergi Garrigo","Aleix Fernandez","Bruno Medina","Joan Solsona","Leo Trabazos","Lluc Marturis","Lluc Alba","Marti Martinez","Nahuel Sosa","Aleix Llort","Ibai Garate","Joan Ferran"],
+  "Alevi Masc 2": ["Lucas Compte","Roger Blanco","Alex Luna","Aitor Valderrama","Aleix Gil","Anselm Fabregat","Biel Brull","Erik Sanchez","Joel Morilla","Marc Ramon","Marcal Maurell","Oriol Olivart","Victor Perez","Oscar Clos"],
+  "Alevi Masc 3": ["Aleix Pannon","Unai Lopez","Marc Galan","Biel Perez","Biel Vallez","Marcel Sakr","Marti Irla","Nacho Rodriguez","Pau Vidal","Sergio Navarro","Iu Medina","Oriol Ruiz","Pol Lozano"],
+  "Alevi Masc 4": ["Iker Quirantes","Ramon Alfos","Alex Olid","Alvaro Gonzalez","Bruno Ramallo","Francesc Rius","Guillem Cañete","Lleo Sabat","Marcel Fernandez","Mario Jimenez","Marti Vallez","Xavi Sanz","Alex Santesmases"],
+  "Infantil Masc 1": ["David Olivares","Didac Belmar","Eric Garcia","Bruno Perez","Adria Martell","Biel Mir","Biel Rios","Pablo Sanchez","Xavier Lopez","Alex Oliva"],
+  "Infantil Masc 2": ["Eloi Roman","Kenzo Hayashi","Aleix Guerrero","Adrian Cifuentes","Antonio Llinares","Emir Isai","Genis Bartolome","Iker Martinez","Mateu Julia","Teo Santafe"],
+  "Infantil Masc 3": ["Kailash Urosa","Oscar Lupiañez","Anibal Garriga","Albert Guardiola","Biel Sanchez","Hugo Gomez","Jan Marco","Nicolas Lao","Nil Saladie","Nil Vicente"],
+  "Infantil Masc 4": ["Leo Moreno","Alejandro Lopez","Alvaro Barredo","Albert Aycart","Alex Moreno","Guillem Salvado","Unai Sanchez","Xavi Pampols","Alex Aguila"],
+  "Cadet Fem 1": ["Sabina Sicilia","Carla Rossi","Adriana Pons","Queralt Raventos","Marina Balaguero","Aneu Isern","Urgell Isern","Aran Bonillo","Ona Carrera","Maria Gonfaus","Elia Tribo","Izaro Gamazo","Duna Fernandez","Chloe Berdie","Laia Verdaguer"],
+  "Infantil Fem 1": ["Laia Minoves","Anna Ripoll","Abril Granado","Carla Mejias","Bruna Riera","Martina Grassas","Chloe Cea","Noa Franquesa","Carla Castella","Daniella Vilet","Mar Jordan","Magali Nadal","Martina Sero","Noa Barranco","Zoe Lopez"],
+  "Infantil Fem 2": ["Niah Cano","Aina","Daniela Llopart","Galla Sabate","Vega Perez","Xenia Vila","Ona Parra","Abril Jozan","Bernat Jimenez","Leire Daza","Nuria Marcos","Queralt Sole","Judith Escolar","Paula Anglade","Carla Anglade"],
+  "Alevi Fem 1": ["Lis Garcia","Valentina Lia Sayol","Gina Bernadas","Julia Granado","Dafne","Mar Cocina","Mar Matamoros","Aida Sebastian","Berta Genoves","Martina Fontanet","Julia Gilabert","Mireia Lluma","Maria Jimenez","Queralt Font","Edda Garcia"]
+};
+
+var CATS = ["Actitud","Participacion","Compañerismo","Juegos / Retos"];
+var CAT_ICONS = ["💪","🙋","🤝","🎮"];
+
+var modo = 'grupo'; // grupo | jugador
+var rankMode = 'grupo';
+
+// ===================== INIT =====================
+function initGrupoSelect(){
+  var sel = document.getElementById('sel-grupo');
+  sel.innerHTML = GRUPOS.map(function(g){return '<option value="'+g+'">'+g+'</option>';}).join('');
+}
+function initJugadorSelect(){
+  var grupo = document.getElementById('sel-grupo').value;
+  var sel = document.getElementById('sel-jugador');
+  var jugs = JUGADORES[grupo] || [];
+  sel.innerHTML = jugs.map(function(j){return '<option value="'+j+'">'+j+'</option>';}).join('');
+}
+function onGrupoChange(){
+  if(modo === 'jugador') initJugadorSelect();
+}
+function initCats(){
+  var cont = document.getElementById('cats-container');
+  var html = '';
+  for(var i=0;i<CATS.length;i++){
+    html += '<div class="cat-card">';
+    html += '<div class="cat-name">'+CAT_ICONS[i]+' '+CATS[i]+'</div>';
+    html += '<div class="stars" data-cat="'+i+'">';
+    for(var s=1;s<=5;s++){
+      html += '<span class="star" data-val="'+s+'" onclick="setStar('+i+','+s+',this)">★</span>';
+    }
+    html += '</div></div>';
+  }
+  cont.innerHTML = html;
+  currentScores = [0,0,0,0];
+}
+
+var currentScores = [0,0,0,0];
+function setStar(catIdx, val, el){
+  currentScores[catIdx] = val;
+  var starsDiv = el.parentElement;
+  var stars = starsDiv.querySelectorAll('.star');
+  stars.forEach(function(s){
+    var sv = parseInt(s.getAttribute('data-val'));
+    if(sv <= val) s.classList.add('filled');
+    else s.classList.remove('filled');
+  });
+}
+
+function setModo(m){
+  modo = m;
+  document.getElementById('tgl-grupo').classList.toggle('active', m==='grupo');
+  document.getElementById('tgl-jugador').classList.toggle('active', m==='jugador');
+  document.getElementById('jugador-select-wrap').style.display = (m==='jugador') ? 'block' : 'none';
+  document.getElementById('grupo-label').textContent = (m==='grupo') ? 'Selecciona el grupo' : 'Grupo del jugador';
+  if(m==='jugador') initJugadorSelect();
+  initCats();
+}
+
+function sM(id, btn){
+  document.querySelectorAll('.mpanel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mt').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('mp-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='rk') renderRanking();
+}
+
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// ===================== GUARDAR =====================
+async function guardarPuntuacion(){
+  var monitor = document.getElementById('monitor-name').value.trim();
+  if(!monitor){ showToast('⚠️ Escribe tu nombre de monitor'); return; }
+
+  var total = currentScores.reduce(function(a,b){return a+b;},0);
+  if(total === 0){ showToast('⚠️ Pon al menos una puntuación'); return; }
+
+  var grupo = document.getElementById('sel-grupo').value;
+  var target, targetType;
+  if(modo === 'grupo'){
+    target = grupo;
+    targetType = 'grupo';
+  } else {
+    target = document.getElementById('sel-jugador').value;
+    targetType = 'jugador';
+  }
+
+  var entry = {
+    target: target,
+    targetType: targetType,
+    grupo: grupo,
+    monitor: monitor,
+    scores: {
+      actitud: currentScores[0],
+      participacion: currentScores[1],
+      companerismo: currentScores[2],
+      juegos: currentScores[3]
+    },
+    total: currentScores.reduce(function(a,b){return a+b;},0),
+    timestamp: new Date().toISOString()
+  };
+
+  var btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  try{
+    var key = 'puntuacion:' + Date.now() + ':' + Math.random().toString(36).slice(2,8);
+    var result = await window.storage.set(key, JSON.stringify(entry), true);
+    if(result){
+      showToast('✅ Puntuación guardada — ' + target);
+      // reset
+      currentScores = [0,0,0,0];
+      initCats();
+    } else {
+      showToast('❌ Error al guardar, intenta de nuevo');
+    }
+  } catch(e){
+    showToast('❌ Error: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Guardar puntuación';
+  }
+}
+
+// ===================== RANKING =====================
+function setRankMode(m, btn){
+  rankMode = m;
+  document.querySelectorAll('.rk-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderRanking();
+}
+
+async function renderRanking(){
+  var cont = document.getElementById('ranking-container');
+  cont.innerHTML = '<div class="loading">Cargando...</div>';
+  try{
+    var listResult = await window.storage.list('puntuacion:', true);
+    if(!listResult || !listResult.keys || listResult.keys.length === 0){
+      cont.innerHTML = '<div class="rk-empty">Todavía no hay puntuaciones registradas</div>';
+      return;
+    }
+    var entries = [];
+    for(var i=0;i<listResult.keys.length;i++){
+      try{
+        var r = await window.storage.get(listResult.keys[i], true);
+        if(r && r.value){
+          entries.push(JSON.parse(r.value));
+        }
+      }catch(e){}
+    }
+    var agg = {};
+    entries.forEach(function(e){
+      if(e.targetType !== rankMode) return;
+      if(!agg[e.target]) agg[e.target] = {total:0, count:0, grupo: e.grupo};
+      agg[e.target].total += e.total;
+      agg[e.target].count += 1;
+    });
+    var list = Object.keys(agg).map(function(name){
+      var d = agg[name];
+      return {
+        name: name,
+        avg: d.total / d.count,
+        count: d.count,
+        grupo: d.grupo
+      };
+    });
+    list.sort(function(a,b){ return b.avg - a.avg; });
+
+    if(list.length === 0){
+      cont.innerHTML = '<div class="rk-empty">Todavía no hay puntuaciones de '+(rankMode==='grupo'?'grupos':'jugadores')+'</div>';
+      return;
+    }
+
+    var html = '';
+    for(var i=0;i<list.length;i++){
+      var it = list[i];
+      var posClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+      var isTop3 = i < 3;
+      html += '<div class="rk-item'+(isTop3?' top3':'')+'">';
+      html += '<div class="rk-pos '+posClass+'">'+medal+'</div>';
+      html += '<div class="rk-info"><div class="rk-name">'+it.name+'</div>';
+      html += '<div class="rk-sub">'+(rankMode==='jugador' ? it.grupo+' · ' : '')+it.count+' puntuacion'+(it.count!==1?'es':'')+'</div>';
+      if(isTop3){ html += '<div class="rk-band">🎗️ Brazalete</div>'; }
+      html += '</div>';
+      html += '<div><div class="rk-score">'+it.avg.toFixed(1)+'</div><div class="rk-score-sub">/ 20</div></div>';
+      html += '</div>';
+    }
+    cont.innerHTML = html;
+  }catch(e){
+    cont.innerHTML = '<div class="rk-empty">Error cargando ranking: '+e.message+'</div>';
+  }
+}
+
+// ===================== START =====================
+initGrupoSelect();
+initCats();
+</script>
+</body>
+</html>

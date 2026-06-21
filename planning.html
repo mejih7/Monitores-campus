@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus — Planning completo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;padding:12px;background:#fff;color:#1a1a1a;font-size:14px}
+.mtabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;border-bottom:1px solid #e0e0e0;padding-bottom:8px}
+.mt{padding:7px 11px;font-size:11px;font-weight:500;border-radius:6px;border:.5px solid #ccc;background:transparent;color:#666;cursor:pointer}
+.mt.active{color:#fff;border-color:transparent}
+.mt-cj.active{background:#2C3E50}.mt-re.active{background:#2C6B3F}.mt-al.active{background:#C9A800;color:#5A4200}.mt-in.active{background:#7B4FB5}.mt-fe.active{background:#C9560D}.mt-bs.active{background:#185FA5}.mt-gu.active{background:#880E4F}.mt-gm.active{background:#4A4A4A}.mt-gl.active{background:#34495E}
+.mpanel{display:none}.mpanel.active{display:block}
+.dtabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+.dt{padding:5px 9px;font-size:11px;border-radius:6px;border:.5px solid #ccc;background:transparent;color:#666;cursor:pointer}
+.dt.active{background:#E3F0FF;color:#185FA5;border-color:transparent;font-weight:500}
+.colh{display:grid;grid-template-columns:68px 1fr 1fr 1fr;gap:4px;margin-bottom:6px}
+.ch{padding:7px;border-radius:6px;font-size:11px;font-weight:500;text-align:center}
+.ch1{background:#D85A30;color:#fff}.ch2{background:#888780;color:#fff}.ch3{background:#534AB7;color:#fff}
+.el{font-size:9px;opacity:.8;margin-bottom:3px}
+.gr{display:grid;grid-template-columns:68px 1fr 1fr 1fr;gap:4px;align-items:stretch;margin-bottom:3px}
+.tm{font-size:11px;color:#888;text-align:right;padding-right:8px;padding-top:6px;white-space:nowrap;font-weight:500}
+.ce{border-radius:6px;padding:5px 7px;border:.5px solid transparent;font-size:11px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.ct{font-weight:500;margin-bottom:2px;font-size:11px}
+.em{background:transparent;border-color:transparent}
+.cb{background:#FAEEDA;border-color:#FAC775;color:#854F0B}.cbv{background:#FAECE7;border-color:#F0997B;color:#993C1D}.ccp{background:#F1EFE8;border-color:#B4B2A9;color:#5F5E5A}.cbl{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}.cf{background:#EAF3DE;border-color:#97C459;color:#3B6D11}.cd{background:#E6F1FB;border-color:#85B7EB;color:#185FA5}.cn{background:#26215C;border-color:#534AB7;color:#EEEDFE}.cfi{background:#3D0A6B;border-color:#9B6ED4;color:#EEEDFE}.cz{background:#1A1A2E;border-color:#393975;color:#A9A9D4}.cr{background:#0F4C2A;border-color:#1D9E5C;color:#B6EFCF}.ce2{background:#FFF3CD;border-color:#FFCA28;color:#5A4200}.ccl{background:#D85A30;border-color:#B03A18;color:#fff}
+.sl{font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.4px;padding:6px 0 2px 72px}
+.al2{display:flex;align-items:center;gap:4px;justify-content:center;margin-bottom:2px;font-size:10px;flex-wrap:wrap}
+.an{font-weight:500}
+.ba{background:#F5C800;color:#5A4200;font-size:9px;padding:1px 5px;border-radius:6px;font-weight:600;white-space:nowrap}
+.bi{background:#9B6ED4;color:#fff;font-size:9px;padding:1px 5px;border-radius:6px;font-weight:600;white-space:nowrap}
+.bf{background:#F07030;color:#fff;font-size:9px;padding:1px 5px;border-radius:6px;font-weight:600;white-space:nowrap}
+.bgs{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-top:3px}
+.gtl{display:flex;flex-direction:column;gap:4px}
+.tr2{display:grid;grid-template-columns:68px 1fr;gap:6px;align-items:stretch;margin-bottom:4px}
+.tt{font-size:11px;color:#888;text-align:right;padding-right:8px;padding-top:8px;font-weight:500;white-space:nowrap}
+.tc{border-radius:8px;padding:8px 12px;border:.5px solid transparent}
+.tct{font-size:12px;font-weight:600;margin-bottom:2px}
+.tcd{font-size:11px;margin-top:3px;opacity:.85;white-space:pre-line}
+.gm2{background:#FFF8E1;border-color:#FFD54F;color:#5A4200}.gt{background:#E8F5E9;border-color:#81C784;color:#1B5E20}.gf2{background:#EAF3DE;border-color:#97C459;color:#3B6D11}.gb{background:#FAEEDA;border-color:#FAC775;color:#854F0B}.gd{background:#E6F1FB;border-color:#85B7EB;color:#185FA5}.gl2{background:#F3E5F5;border-color:#CE93D8;color:#4A148C}.gn{background:#26215C;border-color:#534AB7;color:#EEEDFE}.gz{background:#1A1A2E;border-color:#393975;color:#A9A9D4}.gr2{background:#0F4C2A;border-color:#1D9E5C;color:#B6EFCF}.ge{background:#FFF3CD;border-color:#FFCA28;color:#5A4200}.gfi{background:#3D0A6B;border-color:#9B6ED4;color:#EEEDFE}.gcl{background:#D85A30;border-color:#B03A18;color:#fff}
+.sep{font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;padding:8px 0 2px 74px}
+.rg{display:flex;flex-direction:column;gap:8px}
+.rc{border-radius:10px;border:.5px solid transparent;overflow:hidden}
+.rh{padding:10px 14px;font-size:13px;font-weight:600}
+.rb2{padding:10px 14px;font-size:12px}
+.rw{font-weight:600;margin-bottom:3px;font-size:13px}
+.rn{font-size:11px;opacity:.8;margin-top:4px;font-style:italic}
+.r1{background:#FAECE7;border-color:#F0997B}.r1 .rh{background:#D85A30;color:#fff}.r1 .rb2{color:#993C1D}
+.r2{background:#EEEDFE;border-color:#AFA9EC}.r2 .rh{background:#534AB7;color:#fff}.r2 .rb2{color:#3C3489}
+.r3{background:#FBEAF0;border-color:#ED93B1}.r3 .rh{background:#D4537E;color:#fff}.r3 .rb2{color:#72243E}
+.r4{background:#F1EFE8;border-color:#B4B2A9}.r4 .rh{background:#888780;color:#fff}.r4 .rb2{color:#5F5E5A}
+.r5{background:#E6F1FB;border-color:#85B7EB}.r5 .rh{background:#378ADD;color:#fff}.r5 .rb2{color:#185FA5}
+.r6{background:#FAEEDA;border-color:#FAC775}.r6 .rh{background:#BA7517;color:#fff}.r6 .rb2{color:#854F0B}
+.r7{background:#EAF3DE;border-color:#97C459}.r7 .rh{background:#4A8B1F;color:#fff}.r7 .rb2{color:#3B6D11}
+.r8{background:#E1F5EE;border-color:#5DCAA5}.r8 .rh{background:#1D9E75;color:#fff}.r8 .rb2{color:#0F6E56}
+.r9{background:#FFF8E1;border-color:#FFD54F}.r9 .rh{background:#F9A825;color:#fff}.r9 .rb2{color:#5A4200}
+.r10{background:#26215C;border-color:#534AB7}.r10 .rh{background:#3D0A6B;color:#EEEDFE}.r10 .rb2{color:#EEEDFE}
+.r11{background:#0F4C2A;border-color:#1D9E5C}.r11 .rh{background:#0A3D22;color:#B6EFCF}.r11 .rb2{color:#B6EFCF}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600;margin-right:4px;margin-top:3px}
+.tm1{background:#F5C800;color:#5A4200}.tm2{background:#E91E8C;color:#fff}.tm3{background:#534AB7;color:#fff}.tm4{background:#888780;color:#fff}.tm5{background:#378ADD;color:#fff}.tm6{background:#0F4C2A;color:#B6EFCF}
+.binput{width:100%;font-size:14px;padding:9px 13px;border-radius:6px;border:.5px solid #ccc;margin-bottom:12px;background:#fff;color:#1a1a1a}
+.binput:focus{outline:none;box-shadow:0 0 0 2px #85B7EB}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:.5px solid transparent}
+.chip:hover{opacity:.8}
+.ca{background:#F5C800;color:#5A4200}.ci{background:#9B6ED4;color:#fff}.cfx{background:#F07030;color:#fff}
+.bres{min-height:60px}
+.nores{text-align:center;padding:28px 0;color:#888;font-size:14px}
+.ghead{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:.5px solid #e0e0e0}
+.gbadge{font-size:13px;font-weight:500;padding:4px 14px;border-radius:20px}
+.gname{font-size:15px;font-weight:500}
+.gmon{font-size:12px;color:#666;margin-left:4px}
+.ddtabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.ddt{padding:5px 9px;font-size:11px;border-radius:6px;border:.5px solid #ccc;background:transparent;color:#666;cursor:pointer}
+.ddt.active{background:#E3F0FF;color:#185FA5;border-color:transparent;font-weight:500}
+.bsched{display:flex;flex-direction:column;gap:5px}
+.brow{display:grid;grid-template-columns:68px 1fr;gap:8px;align-items:start;margin-bottom:5px}
+.btm{font-size:11px;color:#888;font-weight:500;text-align:right;padding-top:9px;white-space:nowrap}
+.bcard{border-radius:6px;padding:8px 12px;border:.5px solid transparent}
+.btt{font-size:12px;font-weight:500;margin-bottom:2px}
+.btd{font-size:11px;opacity:.8;line-height:1.5;white-space:pre-line}
+.bsep{font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.4px;padding:8px 0 2px 76px}
+.bm{background:#FFF8E1;border-color:#FFD54F;color:#5A4200}.bta{background:#E8F5E9;border-color:#81C784;color:#1B5E20}.bfa{background:#EAF3DE;border-color:#97C459;color:#3B6D11}.bbus{background:#FAEEDA;border-color:#FAC775;color:#854F0B}.bdes{background:#E6F1FB;border-color:#85B7EB;color:#185FA5}.bli{background:#F3E5F5;border-color:#CE93D8;color:#4A148C}.bnoc{background:#26215C;border-color:#534AB7;color:#EEEDFE}.bdor{background:#1A1A2E;border-color:#393975;color:#A9A9D4}.breu{background:#0F4C2A;border-color:#1D9E5C;color:#B6EFCF}.besp{background:#FFF3CD;border-color:#FFCA28;color:#5A4200}.bfin{background:#3D0A6B;border-color:#9B6ED4;color:#EEEDFE}.bclo{background:#D85A30;border-color:#B03A18;color:#fff}
+.ginfo{background:#EAF3DE;border:.5px solid #97C459;border-radius:8px;padding:10px 14px;font-size:11px;color:#3B6D11;margin-bottom:16px;line-height:1.6}
+.ginfo strong{font-weight:600}
+.nights{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.ncard{border-radius:10px;overflow:hidden;border:.5px solid transparent}
+.nhead{padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.ntitle{font-size:14px;font-weight:600}
+.nmeta{font-size:11px;opacity:.85;font-weight:500}
+.nbody{padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px}
+.mtag{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;font-size:12px;font-weight:500;background:rgba(255,255,255,.7);border:.5px solid rgba(0,0,0,.1)}
+.ng-dom{background:#F0EAF9;border-color:#B89DD9}.ng-dom .nhead{background:#7B4FB5;color:#fff}
+.ng-lun{background:#E7F3FD;border-color:#85B7EB}.ng-lun .nhead{background:#185FA5;color:#fff}
+.ng-mar{background:#FFF0E8;border-color:#F5A77A}.ng-mar .nhead{background:#C9560D;color:#fff}
+.ng-mie{background:#E8F5E9;border-color:#81C784}.ng-mie .nhead{background:#2C6B3F;color:#fff}
+.ng-jue{background:#FFF8E1;border-color:#FFD54F}.ng-jue .nhead{background:#B07800;color:#fff}
+.ng-vie{background:#FCE4EC;border-color:#F48FB1}.ng-vie .nhead{background:#880E4F;color:#fff}
+.gresumen h3{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:6px}
+.rcard{border-radius:8px;padding:8px 12px;background:#f5f5f5;border:.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between}
+.rname{font-size:12px;font-weight:500}
+.rbadge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;background:#D1FAE5;color:#065F46}
+.legend{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:12px}
+.leg-dot{width:12px;height:12px;border-radius:3px}
+.blabel{font-size:13px;color:#666;margin-bottom:8px;display:block}
+/* GRUPOS Y MONITORES */
+.gm-section{margin-bottom:24px}
+.gm-title{font-size:15px;font-weight:700;margin-bottom:12px;padding:8px 14px;border-radius:8px;color:#fff}
+.gm-al{background:#B09000}.gm-in{background:#6B3FB0}.gm-fe{background:#C9560D}
+.gm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.gm-card{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:.5px solid transparent}
+.gm-card-al{background:#FFF8DC;border-color:#F5C800}.gm-card-in{background:#F3EFFE;border-color:#9B6ED4}.gm-card-fe{background:#FFF0E8;border-color:#F07030}
+.gm-group{font-size:12px;font-weight:700;min-width:80px}
+.gm-arrow{font-size:14px;color:#aaa}
+.gm-monitor{font-size:13px;font-weight:500}
+/* LLISTA GRUPS */
+.gl-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.gl-btn{padding:6px 14px;font-size:12px;font-weight:500;border-radius:20px;border:.5px solid #ccc;background:transparent;color:#666;cursor:pointer;transition:all .15s}
+.gl-btn:hover{opacity:.8}
+.gl-btn.act{color:#fff;border-color:transparent}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.gl-card{border-radius:10px;overflow:hidden;border:.5px solid #e0e0e0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.gl-head{padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.gl-htitle{font-size:13px;font-weight:700;color:#fff}
+.gl-hmeta{font-size:11px;color:rgba(255,255,255,.9)}
+.gl-table{width:100%;border-collapse:collapse;font-size:11px}
+.gl-table th{padding:5px 8px;background:#f5f5f5;color:#555;font-weight:600;text-align:left;border-bottom:1px solid #e8e8e8}
+.gl-table td{padding:5px 8px;border-bottom:.5px solid #f2f2f2;vertical-align:middle}
+.gl-table tr:last-child td{border-bottom:none}
+.gl-porter td{background:#EBF5FB}
+.gl-intol td{background:#FEF9E7}
+.gl-tag-p{background:#2980B9;color:#fff;font-size:9px;padding:1px 6px;border-radius:4px;font-weight:600}
+.gl-tag-j{background:#27AE60;color:#fff;font-size:9px;padding:1px 6px;border-radius:4px;font-weight:600}
+.gl-obs{font-size:10px;color:#C0392B;font-weight:600}
+.gl-any{font-size:10px;color:#888;background:#f0f0f0;padding:1px 5px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="mtabs">
+  <button class="mt mt-cj active" onclick="sM('cj',this)">📅 Calendario</button>
+  <button class="mt mt-re" onclick="sM('re',this)">👥 Responsables</button>
+  <button class="mt mt-al" onclick="sM('al',this)">⚽ Alevín masc.</button>
+  <button class="mt mt-in" onclick="sM('in',this)">⚽ Infantil masc.</button>
+  <button class="mt mt-fe" onclick="sM('fe',this)">⚽ Femenino</button>
+  <button class="mt mt-bs" onclick="sM('bs',this)">🔍 Buscar grupo</button>
+  <button class="mt mt-gu" onclick="sM('gu',this)">🌙 Guardias</button>
+  <button class="mt mt-gm" onclick="sM('gm',this)">📋 Grupos y Monitores</button>
+  <button class="mt mt-gl" onclick="sM('gl',this)">👥 Llista de Grups</button>
+</div>
+
+<!-- CALENDARIO -->
+<div class="mpanel active" id="mp-cj">
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#F5C800"></div>Alevín masc.</div>
+  <div class="leg"><div class="leg-dot" style="background:#9B6ED4"></div>Infantil masc.</div>
+  <div class="leg"><div class="leg-dot" style="background:#F07030"></div>Femenino</div>
+</div>
+<div class="dtabs">
+  <button class="dt active" onclick="sCD('dom',this)">Domingo</button>
+  <button class="dt" onclick="sCD('lun',this)">Lunes</button>
+  <button class="dt" onclick="sCD('mar',this)">Martes</button>
+  <button class="dt" onclick="sCD('mie',this)">Miércoles</button>
+  <button class="dt" onclick="sCD('jue',this)">Jueves</button>
+  <button class="dt" onclick="sCD('vie',this)">Viernes</button>
+  <button class="dt" onclick="sCD('sab',this)">Sábado</button>
+</div>
+<div id="cdcont"></div>
+</div>
+
+<!-- RESPONSABLES -->
+<div class="mpanel" id="mp-re">
+<div class="rg">
+<div class="rc r1"><div class="rh">🏟️ Bolvir — Kings League + Retos + Piscina Bolvir</div><div class="rb2"><div class="rw"><span class="tag tm1">Monitores de grupo</span> responsables de llevar las actividades</div><div class="rn">Cada monitor acompaña a su grupo durante toda la jornada en Bolvir.</div></div></div>
+<div class="rc r2"><div class="rh">🏟️ Pista Bellver</div><div class="rb2"><div class="rw"><span class="tag tm3">Chus Esteban</span> encargado de llevar la sesión</div></div></div>
+<div class="rc r3"><div class="rh">🏐 Voley playa</div><div class="rb2"><div class="rw"><span class="tag tm1">Monitores de grupo</span> responsables de llevar las actividades</div></div></div>
+<div class="rc r4"><div class="rh">⬛ Pista gris (Fútbol sala)</div><div class="rb2"><div class="rw"><span class="tag tm4">Cristian Solís</span> encargado de llevar la sesión</div></div></div>
+<div class="rc r5"><div class="rh">🟦 Pista azul (Fútbol sala)</div><div class="rb2"><div class="rw"><span class="tag tm5">Invitados especiales</span> encargados de llevar la sesión</div></div></div>
+<div class="rc r6"><div class="rh">🎪 Hinchables</div><div class="rb2"><div class="rw"><span class="tag tm1">Monitores de grupo</span> responsables de llevar las actividades</div></div></div>
+<div class="rc r7"><div class="rh">🌿 Césped — Dinámicas</div><div class="rb2"><div class="rw"><span class="tag tm2">Emma i Bet</span> encargadas de dinamizar</div></div></div>
+<div class="rc r8"><div class="rh">🏊 Piscina (campus)</div><div class="rb2"><div class="rw"><span class="tag tm2">Emma i Bet</span> encargadas de dinamizar</div></div></div>
+<div class="rc r9"><div class="rh">🍽️ Comidas</div><div class="rb2"><div class="rw"><span class="tag tm2">Emma i Bet</span> encargadas de organizar el comedor</div><div class="rn">• Intolerantes entran primero · Ordenar comedor</div></div></div>
+<div class="rc r10"><div class="rh">🌙 Actividades nocturnas</div><div class="rb2"><div class="rw"><span class="tag tm1">Monitores de grupo</span> responsables · Emma i Bet de soporte</div></div></div>
+<div class="rc r11"><div class="rh">📋 Reunión de monitores — 22:40 cada noche</div><div class="rb2"><div class="rw"><span class="tag tm6">Todos los monitores</span> reunión de feedback diaria</div><div class="rn">Cada noche a las 22:40 — feedback, coordinación y planificación del día siguiente.</div></div></div>
+</div>
+</div>
+
+<!-- ALEVÍN -->
+<div class="mpanel" id="mp-al">
+<div class="dtabs"><button class="dt active" onclick="sGD('al','dom',this)">Domingo</button><button class="dt" onclick="sGD('al','lun',this)">Lunes</button><button class="dt" onclick="sGD('al','mar',this)">Martes</button><button class="dt" onclick="sGD('al','mie',this)">Miércoles</button><button class="dt" onclick="sGD('al','jue',this)">Jueves</button><button class="dt" onclick="sGD('al','vie',this)">Viernes</button><button class="dt" onclick="sGD('al','sab',this)">Sábado</button></div>
+<div id="alev-cont"></div>
+</div>
+
+<!-- INFANTIL -->
+<div class="mpanel" id="mp-in">
+<div class="dtabs"><button class="dt active" onclick="sGD('in','dom',this)">Domingo</button><button class="dt" onclick="sGD('in','lun',this)">Lunes</button><button class="dt" onclick="sGD('in','mar',this)">Martes</button><button class="dt" onclick="sGD('in','mie',this)">Miércoles</button><button class="dt" onclick="sGD('in','jue',this)">Jueves</button><button class="dt" onclick="sGD('in','vie',this)">Viernes</button><button class="dt" onclick="sGD('in','sab',this)">Sábado</button></div>
+<div id="inf-cont"></div>
+</div>
+
+<!-- FEMENINO -->
+<div class="mpanel" id="mp-fe">
+<div class="dtabs"><button class="dt active" onclick="sGD('fe','dom',this)">Domingo</button><button class="dt" onclick="sGD('fe','lun',this)">Lunes</button><button class="dt" onclick="sGD('fe','mar',this)">Martes</button><button class="dt" onclick="sGD('fe','mie',this)">Miércoles</button><button class="dt" onclick="sGD('fe','jue',this)">Jueves</button><button class="dt" onclick="sGD('fe','vie',this)">Viernes</button><button class="dt" onclick="sGD('fe','sab',this)">Sábado</button></div>
+<div id="fem-cont"></div>
+</div>
+
+<!-- BUSCADOR -->
+<div class="mpanel" id="mp-bs">
+<span class="blabel">Escribe el nombre del grupo o del monitor para ver su horario completo</span>
+<input class="binput" type="text" id="bsearch" placeholder="Ej: A1, Paula, Inf Masc 2, Biel, Alevín Fem, Helena..." oninput="bDo(this.value)" autocomplete="off"/>
+<div class="chips">
+  <span class="chip ca" onclick="bSel('A1')">A1·Paula</span><span class="chip ca" onclick="bSel('A2')">A2·Víctor S</span><span class="chip ca" onclick="bSel('A3')">A3·Berta</span><span class="chip ca" onclick="bSel('A4')">A4·Luis</span>
+  <span class="chip ci" onclick="bSel('Inf Masc 1')">IM1·Marcel</span><span class="chip ci" onclick="bSel('Inf Masc 2')">IM2·Biel</span><span class="chip ci" onclick="bSel('Inf Masc 3')">IM3·Laura</span><span class="chip ci" onclick="bSel('Inf Masc 4')">IM4·Víctor R</span>
+  <span class="chip cfx" onclick="bSel('Alevín Fem')">Alevín Fem·Helena</span><span class="chip cfx" onclick="bSel('Inf.Fem 1')">Inf.Fem 1·Hugo</span><span class="chip cfx" onclick="bSel('Inf.Fem 2')">Inf.Fem 2·Sandra</span><span class="chip cfx" onclick="bSel('Cadet Fem')">Cadet Fem·Isaac</span>
+</div>
+<div class="bres" id="bres"><div class="nores">Selecciona un grupo o escribe su nombre arriba</div></div>
+</div>
+
+<!-- GUARDIAS -->
+<div class="mpanel" id="mp-gu">
+<div class="ginfo"><strong>14 monitores · 1 guardia cada uno</strong><br>6 noches (Dom–Vie) · 2–3 personas por noche</div>
+<div class="nights">
+  <div class="ncard ng-dom"><div class="nhead"><span class="ntitle">🌙 Domingo noche</span><span class="nmeta">3 personas</span></div><div class="nbody"><div class="mtag">👤 Paula Jiménez</div><div class="mtag">👤 Luis Medina</div><div class="mtag">👤 Emma Cardona</div></div></div>
+  <div class="ncard ng-lun"><div class="nhead"><span class="ntitle">🌙 Lunes noche</span><span class="nmeta">3 personas</span></div><div class="nbody"><div class="mtag">👤 Biel Gay</div><div class="mtag">👤 Helena</div><div class="mtag">👤 Bet</div></div></div>
+  <div class="ncard ng-mar"><div class="nhead"><span class="ntitle">🌙 Martes noche</span><span class="nmeta">2 personas</span></div><div class="nbody"><div class="mtag">👤 Laura Latorre</div><div class="mtag">👤 Marcel Bravo</div></div></div>
+  <div class="ncard ng-mie"><div class="nhead"><span class="ntitle">🌙 Miércoles noche</span><span class="nmeta">2 personas</span></div><div class="nbody"><div class="mtag">👤 Víctor Sánchez</div><div class="mtag">👤 Víctor Ramos</div></div></div>
+  <div class="ncard ng-jue"><div class="nhead"><span class="ntitle">🌙 Jueves noche</span><span class="nmeta">2 personas</span></div><div class="nbody"><div class="mtag">👤 Hugo</div><div class="mtag">👤 Sandra García</div></div></div>
+  <div class="ncard ng-vie"><div class="nhead"><span class="ntitle">🌙 Viernes noche</span><span class="nmeta">2 personas</span></div><div class="nbody"><div class="mtag">👤 Isaac Boqué</div><div class="mtag">👤 Berta Solé</div></div></div>
+</div>
+<div class="gresumen"><h3>Resumen — todos hacen 1 guardia</h3>
+<div class="rgrid">
+  <div class="rcard"><span class="rname">Paula Jiménez</span><span class="rbadge">Dom</span></div>
+  <div class="rcard"><span class="rname">Luis Medina</span><span class="rbadge">Dom</span></div>
+  <div class="rcard"><span class="rname">Emma Cardona</span><span class="rbadge">Dom</span></div>
+  <div class="rcard"><span class="rname">Biel Gay</span><span class="rbadge">Lun</span></div>
+  <div class="rcard"><span class="rname">Helena</span><span class="rbadge">Lun</span></div>
+  <div class="rcard"><span class="rname">Bet</span><span class="rbadge">Lun</span></div>
+  <div class="rcard"><span class="rname">Laura Latorre</span><span class="rbadge">Mar</span></div>
+  <div class="rcard"><span class="rname">Marcel Bravo</span><span class="rbadge">Mar</span></div>
+  <div class="rcard"><span class="rname">Víctor Sánchez</span><span class="rbadge">Mié</span></div>
+  <div class="rcard"><span class="rname">Víctor Ramos</span><span class="rbadge">Mié</span></div>
+  <div class="rcard"><span class="rname">Hugo</span><span class="rbadge">Jue</span></div>
+  <div class="rcard"><span class="rname">Sandra García</span><span class="rbadge">Jue</span></div>
+  <div class="rcard"><span class="rname">Isaac Boqué</span><span class="rbadge">Vie</span></div>
+  <div class="rcard"><span class="rname">Berta Solé</span><span class="rbadge">Vie</span></div>
+</div></div>
+</div>
+
+<!-- GRUPOS Y MONITORES -->
+<div class="mpanel" id="mp-gm">
+  <div class="gm-section">
+    <div class="gm-title gm-al">⚽ Alevín masculino</div>
+    <div class="gm-grid">
+      <div class="gm-card gm-card-al"><span class="gm-group">Aleví Masc 1</span><span class="gm-arrow">→</span><span class="gm-monitor">Paula</span></div>
+      <div class="gm-card gm-card-al"><span class="gm-group">Aleví Masc 2</span><span class="gm-arrow">→</span><span class="gm-monitor">Víctor S</span></div>
+      <div class="gm-card gm-card-al"><span class="gm-group">Aleví Masc 3</span><span class="gm-arrow">→</span><span class="gm-monitor">Berta</span></div>
+      <div class="gm-card gm-card-al"><span class="gm-group">Aleví Masc 4</span><span class="gm-arrow">→</span><span class="gm-monitor">Luis</span></div>
+    </div>
+  </div>
+  <div class="gm-section">
+    <div class="gm-title gm-in">⚽ Infantil masculino</div>
+    <div class="gm-grid">
+      <div class="gm-card gm-card-in"><span class="gm-group">Infantil Masc 1</span><span class="gm-arrow">→</span><span class="gm-monitor">Marcel</span></div>
+      <div class="gm-card gm-card-in"><span class="gm-group">Infantil Masc 2</span><span class="gm-arrow">→</span><span class="gm-monitor">Biel</span></div>
+      <div class="gm-card gm-card-in"><span class="gm-group">Infantil Masc 3</span><span class="gm-arrow">→</span><span class="gm-monitor">Laura</span></div>
+      <div class="gm-card gm-card-in"><span class="gm-group">Infantil Masc 4</span><span class="gm-arrow">→</span><span class="gm-monitor">Víctor R</span></div>
+    </div>
+  </div>
+  <div class="gm-section">
+    <div class="gm-title gm-fe">⚽ Femenino</div>
+    <div class="gm-grid">
+      <div class="gm-card gm-card-fe"><span class="gm-group">Aleví Fem 1</span><span class="gm-arrow">→</span><span class="gm-monitor">Helena</span></div>
+      <div class="gm-card gm-card-fe"><span class="gm-group">Infantil Fem 1</span><span class="gm-arrow">→</span><span class="gm-monitor">Hugo</span></div>
+      <div class="gm-card gm-card-fe"><span class="gm-group">Infantil Fem 2</span><span class="gm-arrow">→</span><span class="gm-monitor">Sandra</span></div>
+      <div class="gm-card gm-card-fe"><span class="gm-group">Cadet Fem 1</span><span class="gm-arrow">→</span><span class="gm-monitor">Isaac</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LLISTA DE GRUPS -->
+<div class="mpanel" id="mp-gl">
+  <div class="gl-filters" id="gl-filters"></div>
+  <div class="gl-grid" id="gl-grid"></div>
+</div>
+
+</div>
+
+<script>
+// ============ DATOS ============
+var MON={'A1':'Paula','A2':'Victor S','A3':'Berta','A4':'Luis','Inf Masc 1':'Marcel','Inf Masc 2':'Biel','Inf Masc 3':'Laura','Inf Masc 4':'Victor R','Alev\u00edn Fem':'Helena','Inf.Fem 1':'Hugo','Inf.Fem 2':'Sandra','Cadet Fem':'Isaac'};
+var MON_INV={'paula':'A1','victor s':'A2','berta':'A3','luis':'A4','marcel':'Inf Masc 1','biel':'Inf Masc 2','laura':'Inf Masc 3','victor r':'Inf Masc 4','helena':'Alev\u00edn Fem','hugo':'Inf.Fem 1','sandra':'Inf.Fem 2','isaac':'Cadet Fem'};
+var MODEL={al:{dom:'M3',lun:'M1',mar:'M2',mie:'M3',jue:'M1',vie:'M2'},in:{dom:'M2',lun:'M3',mar:'M1',mie:'M2',jue:'M3',vie:'M1'},fe:{dom:'M1',lun:'M2',mar:'M3',mie:'M1',jue:'M2',vie:'M3'}};
+var DAYROT={dom:{M1:'fe',M2:'in',M3:'al'},lun:{M1:'al',M2:'fe',M3:'in'},mar:{M1:'in',M2:'al',M3:'fe'},mie:{M1:'fe',M2:'in',M3:'al'},jue:{M1:'al',M2:'fe',M3:'in'},vie:{M1:'in',M2:'al',M3:'fe'}};
+var NOCHES={al:{dom:'Dinmicas+Coreografa',lun:'\uD83E\uDD69 Discoteca+Bingo',mar:'Dinmicas+Coreografa',mie:'Dinmicas+Coreografa',jue:'\uD83E\uDD69 Discoteca+Bingo',vie:'final'},in:{dom:'Kings League noche',lun:'Dinmicas+Coreografa',mar:'\uD83E\uDD69 Discoteca+Bingo',mie:'Kings League noche',jue:'Dinmicas+Coreografa',vie:'final'},fe:{dom:'\uD83E\uDD69 Discoteca+Bingo',lun:'Kings League noche',mar:'Dinmicas+Coreografa',mie:'\uD83E\uDD69 Discoteca+Bingo',jue:'Kings League noche',vie:'final'}};
+var M2={al:{M1:{A1:'Gris',A2:'C\u00e9sped',A3:'Azul',A4:'Piscina'},M2:{A1:'C\u00e9sped',A2:'Gris',A3:'Piscina',A4:'Azul'},T1:{A1:'P.azul',A2:'Piscina',A3:'P.gris',A4:'C\u00e9sped'},T2:{A1:'Piscina',A2:'P.azul',A3:'C\u00e9sped',A4:'P.gris'}},in:{M1:{'Inf Masc 1':'Gris','Inf Masc 2':'C\u00e9sped','Inf Masc 3':'Azul','Inf Masc 4':'Piscina'},M2:{'Inf Masc 1':'C\u00e9sped','Inf Masc 2':'Gris','Inf Masc 3':'Piscina','Inf Masc 4':'Azul'},T1:{'Inf Masc 1':'P.azul','Inf Masc 2':'Piscina','Inf Masc 3':'P.gris','Inf Masc 4':'C\u00e9sped'},T2:{'Inf Masc 1':'Piscina','Inf Masc 2':'P.azul','Inf Masc 3':'C\u00e9sped','Inf Masc 4':'P.gris'}},fe:{M1:{'Alev\u00edn Fem':'Gris','Inf.Fem 1':'C\u00e9sped','Inf.Fem 2':'Azul','Cadet Fem':'Piscina'},M2:{'Alev\u00edn Fem':'C\u00e9sped','Inf.Fem 1':'Gris','Inf.Fem 2':'Piscina','Cadet Fem':'Azul'},T1:{'Alev\u00edn Fem':'P.azul','Inf.Fem 1':'Piscina','Inf.Fem 2':'P.gris','Cadet Fem':'C\u00e9sped'},T2:{'Alev\u00edn Fem':'Piscina','Inf.Fem 1':'P.azul','Inf.Fem 2':'C\u00e9sped','Cadet Fem':'P.gris'}}};
+var M3={al:{T1:{A1:'Bellver',A2:'Voley',A3:'Hinch',A4:'Din+Pisc'},T2:{A1:'Voley',A2:'Bellver',A3:'Din+Pisc',A4:'Hinch'},T1t:{A1:'Hinch',A2:'Din+Pisc',A3:'Bellver',A4:'Voley'},T2t:{A1:'Din+Pisc',A2:'Hinch',A3:'Voley',A4:'Bellver'}},in:{T1:{'Inf Masc 1':'Bellver','Inf Masc 2':'Voley','Inf Masc 3':'Hinch','Inf Masc 4':'Din+Pisc'},T2:{'Inf Masc 1':'Voley','Inf Masc 2':'Bellver','Inf Masc 3':'Din+Pisc','Inf Masc 4':'Hinch'},T1t:{'Inf Masc 1':'Hinch','Inf Masc 2':'Din+Pisc','Inf Masc 3':'Bellver','Inf Masc 4':'Voley'},T2t:{'Inf Masc 1':'Din+Pisc','Inf Masc 2':'Hinch','Inf Masc 3':'Voley','Inf Masc 4':'Bellver'}},fe:{T1:{'Alev\u00edn Fem':'Bellver','Inf.Fem 1':'Voley','Inf.Fem 2':'Hinch','Cadet Fem':'Din+Pisc'},T2:{'Alev\u00edn Fem':'Voley','Inf.Fem 1':'Bellver','Inf.Fem 2':'Din+Pisc','Cadet Fem':'Hinch'},T1t:{'Alev\u00edn Fem':'Hinch','Inf.Fem 1':'Din+Pisc','Inf.Fem 2':'Bellver','Cadet Fem':'Voley'},T2t:{'Alev\u00edn Fem':'Din+Pisc','Inf.Fem 1':'Hinch','Inf.Fem 2':'Voley','Cadet Fem':'Bellver'}}};
+var SG={al:['A1','A2','A3','A4'],in:['Inf Masc 1','Inf Masc 2','Inf Masc 3','Inf Masc 4'],fe:['Alev\u00edn Fem','Inf.Fem 1','Inf.Fem 2','Cadet Fem']};
+var CATNAMES={al:'Alev\u00edn masculino',in:'Infantil masculino',fe:'Femenino'};
+var CATCOL={al:'background:#F5C800;color:#5A4200',in:'background:#9B6ED4;color:#fff',fe:'background:#F07030;color:#fff'};
+var CB={al:'ba',in:'bi',fe:'bf'};
+var DK=['dom','lun','mar','mie','jue','vie','sab'];
+var DL=['Domingo','Lunes','Martes','Mi\u00e9rcoles','Jueves','Viernes','S\u00e1bado'];
+
+// ============ DATOS LLISTA GRUPS ============
+var GRUPS = [
+  {nom:'Alev\u00ed Masc 1', cat:'alm', monitor:'Paula', color:'#C9A800', jugadors:[
+    {p:true,nom:'Iker',cog:'Membrives V\u00e1zquez',any:2014,obs:''},
+    {p:true,nom:'Jan',cog:'Serano',any:2014,obs:''},
+    {p:true,nom:'Sergi',cog:'Garrigo Viade',any:2014,obs:''},
+    {p:false,nom:'Aleix',cog:'Fernandez Sanglas',any:2014,obs:''},
+    {p:false,nom:'Bruno',cog:'Medina Nieto',any:2014,obs:''},
+    {p:false,nom:'Joan',cog:'Solsona S\u00e1nchez',any:2014,obs:'Al\u00b7l\u00e8rgia prote\u00efna llet vaca'},
+    {p:false,nom:'Leo',cog:'Trabazos Ojeda',any:2014,obs:''},
+    {p:false,nom:'Lluc',cog:'Marturis Vila',any:2014,obs:''},
+    {p:false,nom:'Lluc',cog:'Alba i Puig',any:2014,obs:''},
+    {p:false,nom:'Mart\u00ed',cog:'Martinez Bargall\u00f3',any:2014,obs:''},
+    {p:false,nom:'Nahuel',cog:'Sosa Navas',any:2014,obs:''},
+    {p:false,nom:'Aleix',cog:'Llort Roset',any:2015,obs:''},
+    {p:false,nom:'Ibai',cog:'Garate Font',any:2015,obs:''},
+    {p:false,nom:'Joan',cog:'Ferran Giralt',any:2015,obs:''}
+  ]},
+  {nom:'Alev\u00ed Masc 2', cat:'alm', monitor:'V\u00edctor S', color:'#C9A800', jugadors:[
+    {p:true,nom:'Lucas',cog:'Compte de Castellarnau',any:2014,obs:''},
+    {p:true,nom:'Roger',cog:'Blanco Pellicer',any:2014,obs:'Al\u00b7l\u00e8rgia ambiental primavera'},
+    {p:true,nom:'\u00c1lex',cog:'Luna Mart\u00ednez',any:2014,obs:''},
+    {p:false,nom:'Aitor',cog:'Valderrama Ruiz',any:2014,obs:''},
+    {p:false,nom:'Aleix',cog:'Gil Sis\u00f3',any:2014,obs:''},
+    {p:false,nom:'Anselm',cog:'Fabregat Joval',any:2014,obs:''},
+    {p:false,nom:'Biel',cog:'Brull Torra',any:2014,obs:'Cel\u00edac - sense gluten'},
+    {p:false,nom:'Erik',cog:'S\u00e1nchez Gayete',any:2014,obs:''},
+    {p:false,nom:'Joel',cog:'Morilla Dalmau',any:2014,obs:''},
+    {p:false,nom:'Marc',cog:'Ramon Coll',any:2014,obs:'Cel\u00edac - sense gluten'},
+    {p:false,nom:'Mar\u00e7al',cog:'Maurell Ruiz',any:2014,obs:'Intoler\u00e0ncia llenties'},
+    {p:false,nom:'Oriol',cog:'Olivart Mingote',any:2014,obs:'Asma al\u00b7l\u00e8rgica - porta inhalador'},
+    {p:false,nom:'V\u00edctor',cog:'P\u00e9rez P\u00e9rez',any:2014,obs:''},
+    {p:false,nom:'\u00d2scar',cog:'Clos Riera',any:2014,obs:''}
+  ]},
+  {nom:'Alev\u00ed Masc 3', cat:'alm', monitor:'Berta', color:'#C9A800', jugadors:[
+    {p:true,nom:'Aleix',cog:'Pann\u00f3n Joher',any:2014,obs:''},
+    {p:true,nom:'Unai',cog:'L\u00f3pez Jim\u00e9nez',any:2014,obs:''},
+    {p:true,nom:'Marc',cog:'Gal\u00e1n Teixid\u00f3',any:2015,obs:''},
+    {p:false,nom:'Biel',cog:'Perez Garcia',any:2014,obs:''},
+    {p:false,nom:'Biel',cog:'Vallez',any:2014,obs:''},
+    {p:false,nom:'Marcel',cog:'Sakr Garc\u00eda',any:2014,obs:''},
+    {p:false,nom:'Mart\u00ed',cog:'Irla Palomanes',any:2014,obs:''},
+    {p:false,nom:'Nacho',cog:'Rodriguez Iglesias',any:2014,obs:''},
+    {p:false,nom:'Pau',cog:'Vidal Gonz\u00e1lez',any:2014,obs:''},
+    {p:false,nom:'Sergio',cog:'Navarro Espinosa',any:2014,obs:''},
+    {p:false,nom:'\u00cfu',cog:'Medina Marca',any:2014,obs:''},
+    {p:false,nom:'Oriol',cog:'Ruiz Meca',any:2015,obs:''},
+    {p:false,nom:'Pol',cog:'Lozano Salleras',any:2015,obs:''}
+  ]},
+  {nom:'Alev\u00ed Masc 4', cat:'alm', monitor:'Luis', color:'#C9A800', jugadors:[
+    {p:true,nom:'Iker',cog:'Quirantes Tostado',any:2014,obs:''},
+    {p:true,nom:'Ramon',cog:'Alf\u00f3s Herrera',any:2014,obs:''},
+    {p:false,nom:'Alex',cog:'Olid Lombardero',any:2014,obs:''},
+    {p:false,nom:'Alvaro',cog:'Gonzalez Echenique',any:2014,obs:''},
+    {p:false,nom:'Bruno',cog:'Ramallo Gil',any:2014,obs:''},
+    {p:false,nom:'Francesc',cog:'Rius Font',any:2014,obs:''},
+    {p:false,nom:'Guillem',cog:'Ca\u00f1ete Ros',any:2014,obs:''},
+    {p:false,nom:'Lle\u00f3',cog:'S\u00e0bat Ruiz',any:2014,obs:''},
+    {p:false,nom:'Marcel',cog:'Fern\u00e1ndez Andreu',any:2014,obs:''},
+    {p:false,nom:'Mario',cog:'Jim\u00e9nez Romero',any:2014,obs:''},
+    {p:false,nom:'Mart\u00ed',cog:'Vallez Garcia',any:2014,obs:''},
+    {p:false,nom:'Xavi',cog:'Sanz Rodr\u00edguez',any:2014,obs:''},
+    {p:false,nom:'\u00c0lex',cog:'Santesmases Garcia',any:2014,obs:''}
+  ]},
+  {nom:'Infantil Masc 1', cat:'inm', monitor:'Marcel', color:'#7B4FB5', jugadors:[
+    {p:true,nom:'David',cog:'Olivares Rom\u00e1n',any:2012,obs:''},
+    {p:true,nom:'D\u00eddac',cog:'Belmar Trull',any:2012,obs:''},
+    {p:true,nom:'Eric',cog:'Garc\u00eda Garc\u00eda',any:2013,obs:''},
+    {p:false,nom:'Bruno',cog:'P\u00e9rez G\u00f3mez',any:2010,obs:''},
+    {p:false,nom:'Adri\u00e0',cog:'Martell Leyva',any:2012,obs:'Malaltia Von Willebrand'},
+    {p:false,nom:'Biel',cog:'Mir Fortuny',any:2012,obs:''},
+    {p:false,nom:'Biel',cog:'Rios Sanz',any:2012,obs:''},
+    {p:false,nom:'Pablo',cog:'Sanchez Martinez',any:2012,obs:''},
+    {p:false,nom:'Xavier',cog:'L\u00f3pez L\u00f3pez',any:2012,obs:''},
+    {p:false,nom:'\u00c0lex',cog:'Oliva Coma',any:2012,obs:''}
+  ]},
+  {nom:'Infantil Masc 2', cat:'inm', monitor:'Biel', color:'#7B4FB5', jugadors:[
+    {p:true,nom:'Eloi',cog:'Roman Pa\u00f1ella',any:2012,obs:''},
+    {p:true,nom:'Kenzo',cog:'Hayashi Mart\u00ednez',any:2012,obs:''},
+    {p:true,nom:'Aleix',cog:'Guerrero Vila',any:2013,obs:''},
+    {p:false,nom:'Adri\u00e1n',cog:'Cifuentes Ararat',any:2012,obs:''},
+    {p:false,nom:'Antonio',cog:'Llinares Gabarron',any:2012,obs:''},
+    {p:false,nom:'Emir Isai',cog:'Montoya Lopez',any:2012,obs:''},
+    {p:false,nom:'Gen\u00eds',cog:'Bartolom\u00e9 Casademunt',any:2012,obs:''},
+    {p:false,nom:'Iker',cog:'Martinez Pat\u00f3n',any:2012,obs:''},
+    {p:false,nom:'Mateu',cog:'Julia Hernandez',any:2012,obs:''},
+    {p:false,nom:'Teo',cog:'Santafe Ruiz',any:2012,obs:''}
+  ]},
+  {nom:'Infantil Masc 3', cat:'inm', monitor:'Laura', color:'#7B4FB5', jugadors:[
+    {p:true,nom:'Kailash',cog:'Urosa Jovani',any:2012,obs:'Malaltia severa als peus'},
+    {p:true,nom:'Oscar',cog:'Lupi\u00e1\u00f1ez Trykowski',any:2012,obs:''},
+    {p:true,nom:'An\u00edbal',cog:'Garriga Caballero',any:2013,obs:''},
+    {p:false,nom:'Albert',cog:'Guardiola Entrena',any:2012,obs:''},
+    {p:false,nom:'Biel',cog:'S\u00e1nchez Gomez',any:2012,obs:''},
+    {p:false,nom:'Hugo',cog:'G\u00f3mez Terr\u00f3n',any:2012,obs:'Taps per la o\u00efda'},
+    {p:false,nom:'Jan',cog:'Marco Mateo',any:2012,obs:''},
+    {p:false,nom:'Nicolas',cog:'Lao Beltran',any:2012,obs:''},
+    {p:false,nom:'Nil',cog:'Saladie Iglesias',any:2012,obs:''},
+    {p:false,nom:'Nil',cog:'Vicente Encuentra',any:2012,obs:''}
+  ]},
+  {nom:'Infantil Masc 4', cat:'inm', monitor:'V\u00edctor R', color:'#7B4FB5', jugadors:[
+    {p:true,nom:'Leo',cog:'Moreno Sanchez',any:2012,obs:''},
+    {p:true,nom:'Alejandro',cog:'L\u00f3pez Moral',any:2013,obs:''},
+    {p:true,nom:'Alvaro',cog:'Barredo Moure',any:2013,obs:''},
+    {p:false,nom:'Albert',cog:'Aycart Calder\u00f3n',any:2012,obs:''},
+    {p:false,nom:'Alex',cog:'Moreno Agudo',any:2012,obs:''},
+    {p:false,nom:'Guillem',cog:'Salvado Beltran',any:2012,obs:''},
+    {p:false,nom:'Unai',cog:'Sanchez Latorre',any:2012,obs:''},
+    {p:false,nom:'Xavi',cog:'Pampols Teixido',any:2012,obs:'Al\u00b7l\u00e8rgia al jengibre'},
+    {p:false,nom:'\u00c0lex',cog:'Agui\u00e0 Egozcue',any:2012,obs:''}
+  ]},
+  {nom:'Cadet Fem 1', cat:'caf', monitor:'Isaac', color:'#C9560D', jugadors:[
+    {p:false,nom:'Sabina',cog:'Sicilia P\u00e9rez',any:2010,obs:''},
+    {p:false,nom:'Carla',cog:'Rossi Fern\u00e1ndez',any:2010,obs:''},
+    {p:false,nom:'Adriana',cog:'Pons Redondo',any:2010,obs:''},
+    {p:false,nom:'Queralt',cog:'Ravent\u00f3s',any:2010,obs:''},
+    {p:false,nom:'Marina',cog:'Balaquer\u00f3 Querol',any:2010,obs:''},
+    {p:false,nom:'\u00c0neu',cog:'Isern Fontanet',any:2010,obs:''},
+    {p:false,nom:'Urgell',cog:'Isern Fontanet',any:2010,obs:''},
+    {p:false,nom:'Aran',cog:'Bonillo Puebla',any:2011,obs:''},
+    {p:false,nom:'Ona',cog:'Carrera Pint\u00f3',any:2011,obs:''},
+    {p:false,nom:'Maria',cog:'Gonfaus Gomez',any:2011,obs:''},
+    {p:false,nom:'\u00c8lia',cog:'Trib\u00f3 Valls',any:2011,obs:''},
+    {p:false,nom:'Izaro',cog:'Gamazo Barrera',any:2011,obs:''},
+    {p:false,nom:'Duna',cog:'Fernandez Gilabert',any:2011,obs:''},
+    {p:false,nom:'Chloe',cog:'Berdie Fernandez',any:2012,obs:''},
+    {p:false,nom:'Laia',cog:'Verdaguer Fern\u00e1ndez',any:2012,obs:''}
+  ]},
+  {nom:'Infantil Fem 1', cat:'inf', monitor:'Hugo', color:'#C9560D', jugadors:[
+    {p:false,nom:'Laia',cog:'Minoves Ferrando',any:2012,obs:''},
+    {p:false,nom:'Anna',cog:'Ripoll Llorens',any:2012,obs:''},
+    {p:false,nom:'Abril',cog:'Granado Lasheras',any:2012,obs:''},
+    {p:false,nom:'Carla',cog:'Mej\u00edas Maraver',any:2012,obs:''},
+    {p:false,nom:'Bruna',cog:'Riera Font',any:2012,obs:''},
+    {p:false,nom:'Martina',cog:'Grassas Maturana',any:2012,obs:''},
+    {p:false,nom:'Chloe',cog:'Cea Vidal',any:2013,obs:''},
+    {p:false,nom:'Noa',cog:'Franquesa Gim\u00e9nez',any:2013,obs:''},
+    {p:false,nom:'Carla',cog:'Castell\u00e0 Novell',any:2013,obs:''},
+    {p:false,nom:'Daniella',cog:'Vilet Portugal',any:2013,obs:''},
+    {p:false,nom:'Mar',cog:'Jordan Redondo',any:2013,obs:''},
+    {p:false,nom:'Magal\u00ed',cog:'Nadal Agui\u00f3',any:2013,obs:''},
+    {p:false,nom:'Martina',cog:'Ser\u00f3 Canchal',any:2013,obs:''},
+    {p:false,nom:'Noa',cog:'Barranco Escobero',any:2013,obs:''},
+    {p:false,nom:'Zoe',cog:'L\u00f3pez Lozano',any:2013,obs:''}
+  ]},
+  {nom:'Infantil Fem 2', cat:'inf', monitor:'Sandra', color:'#C9560D', jugadors:[
+    {p:false,nom:'Niah',cog:'Cano Morcillo',any:2013,obs:''},
+    {p:false,nom:'Aina',cog:'',any:2013,obs:''},
+    {p:false,nom:'Daniela',cog:'Llopart Bautista',any:2013,obs:''},
+    {p:false,nom:'Gal\u00b7la',cog:'Sab\u00e0 Esquerda',any:2013,obs:''},
+    {p:false,nom:'Vega',cog:'P\u00e9rez Mesa',any:2013,obs:''},
+    {p:false,nom:'X\u00e8nia',cog:'Vila Ortiz',any:2013,obs:''},
+    {p:false,nom:'Ona',cog:'Parra Garcia',any:2014,obs:''},
+    {p:false,nom:'Abril',cog:'Jozan Casanovas',any:2014,obs:''},
+    {p:false,nom:'Bernat',cog:'Jim\u00e9nez Lage',any:2014,obs:''},
+    {p:false,nom:'Leire',cog:'Daza Risco',any:2014,obs:''},
+    {p:false,nom:'N\u00faria',cog:'Marcos Figueres',any:2014,obs:''},
+    {p:false,nom:'Queralt',cog:'Sol\u00e9 Roca',any:2014,obs:''},
+    {p:false,nom:'Judith',cog:'Escolar Barata',any:2014,obs:''},
+    {p:false,nom:'Paula',cog:'Anglade Pe\u00f1alver',any:2014,obs:''},
+    {p:false,nom:'Carla',cog:'Anglade Pe\u00f1alver',any:2014,obs:''}
+  ]},
+  {nom:'Alev\u00ed Fem 1', cat:'alf', monitor:'Helena', color:'#C9560D', jugadors:[
+    {p:false,nom:'Lis',cog:'Garcia Corrales',any:2014,obs:''},
+    {p:false,nom:'Valentina L\u00eda',cog:'Sayol Garcia',any:2014,obs:''},
+    {p:false,nom:'Gina',cog:'Bernadas Ginovart',any:2014,obs:''},
+    {p:false,nom:'J\u00falia',cog:'Granado Lasheras',any:2014,obs:''},
+    {p:false,nom:'Dafne',cog:'',any:2014,obs:''},
+    {p:false,nom:'Mar',cog:'Cocina Fernandez',any:2014,obs:''},
+    {p:false,nom:'Mar',cog:'Matamoros Bota',any:2014,obs:''},
+    {p:false,nom:'Aida',cog:'Sebastian Torner',any:2014,obs:''},
+    {p:false,nom:'Berta',cog:'Genov\u00e8s Farr\u00e0s',any:2014,obs:''},
+    {p:false,nom:'Martina',cog:'Fontanet Flores',any:2014,obs:''},
+    {p:false,nom:'J\u00falia',cog:'Gilabert Mitjavila',any:2014,obs:''},
+    {p:false,nom:'Mireia',cog:'Llum\u00e0',any:2014,obs:''},
+    {p:false,nom:'Maria',cog:'Jim\u00e9nez Lage',any:2014,obs:''},
+    {p:false,nom:'Queralt',cog:'Font Tortras',any:2015,obs:''},
+    {p:false,nom:'Edda',cog:'Garcia Escaler',any:2016,obs:''}
+  ]}
+];
+
+// ============ NAVEGACION ============
+function sM(id,btn){
+  document.querySelectorAll('.mpanel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mt').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('mp-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='gl') renderGL('all');
+}
+function sCD(d,b){document.querySelectorAll('#mp-cj .dt').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderCD(d);}
+function sGD(g,d,b){document.querySelectorAll('#mp-'+g+' .dt').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderGD(g,d);}
+
+// ============ LLISTA GRUPS ============
+function renderGL(filtro) {
+  var filtros = [{k:'all',lbl:'Tots'},{k:'alm',lbl:'Alev\u00ed masc.'},{k:'inm',lbl:'Infantil masc.'},{k:'caf',lbl:'Cadet fem.'},{k:'inf',lbl:'Infantil fem.'},{k:'alf',lbl:'Alev\u00ed fem.'}];
+  var fDiv = document.getElementById('gl-filters');
+  var gDiv = document.getElementById('gl-grid');
+  var fHtml = '';
+  for(var fi=0;fi<filtros.length;fi++){
+    var f=filtros[fi];
+    var isAct=(f.k===filtro);
+    var st=isAct?' style="background:#34495E;color:#fff;border-color:transparent"':'';
+    fHtml+='<button class="gl-btn"'+st+' onclick="renderGL(\''+f.k+'\')">'+f.lbl+'</button>';
+  }
+  fDiv.innerHTML=fHtml;
+  var gHtml='';
+  for(var gi=0;gi<GRUPS.length;gi++){
+    var g=GRUPS[gi];
+    if(filtro!=='all' && g.cat!==filtro) continue;
+    var nPort=0; for(var ji=0;ji<g.jugadors.length;ji++){if(g.jugadors[ji].p)nPort++;}
+    var nObs=0; for(var ji=0;ji<g.jugadors.length;ji++){if(g.jugadors[ji].obs)nObs++;}
+    gHtml+='<div class="gl-card">';
+    gHtml+='<div class="gl-head" style="background:'+g.color+'">';
+    gHtml+='<span class="gl-htitle">'+g.nom+'</span>';
+    gHtml+='<span class="gl-hmeta">Monitor: '+g.monitor+' &middot; '+g.jugadors.length+' jug. &middot; '+nPort+' porters</span>';
+    gHtml+='</div>';
+    gHtml+='<table class="gl-table"><tr><th>#</th><th>Nom</th><th>Any</th><th>Pos.</th><th>Obs.</th></tr>';
+    for(var ji=0;ji<g.jugadors.length;ji++){
+      var j=g.jugadors[ji];
+      var cls=j.p?'gl-porter':(j.obs?'gl-intol':'');
+      var posTxt=j.p?'<span class="gl-tag-p">Porter</span>':'<span class="gl-tag-j">Jugador</span>';
+      var obsTxt=j.obs?'<span class="gl-obs">'+j.obs+'</span>':'';
+      var cogTxt=j.cog?j.cog:'';
+      gHtml+='<tr class="'+cls+'">';
+      gHtml+='<td>'+(ji+1)+'</td>';
+      gHtml+='<td><strong>'+j.nom+'</strong> '+cogTxt+'</td>';
+      gHtml+='<td><span class="gl-any">'+j.any+'</span></td>';
+      gHtml+='<td>'+posTxt+'</td>';
+      gHtml+='<td>'+obsTxt+'</td>';
+      gHtml+='</tr>';
+    }
+    gHtml+='</table></div>';
+  }
+  gDiv.innerHTML=gHtml;
+}
+
+// ============ HELPERS CALENDARIO ============
+function cbh(c){var n={al:'Alev\u00edn masc.',in:'Infantil masc.',fe:'Femenino'};var bg={al:'background:#F5C800;color:#5A4200',in:'background:#9B6ED4;color:#fff',fe:'background:#F07030;color:#fff'};return '<div style="'+bg[c]+';border-radius:4px;padding:2px 6px;display:inline-block;margin-top:3px;font-size:11px;font-weight:600">'+n[c]+'</div>';}
+function badge(g,cls){var m=MON[g]||'';return '<span class="'+cls+'" style="white-space:nowrap">'+g+(m?('&middot;'+m):'')+'</span>';}
+function bolv(c){if(c==='al')return 'T1: Kings \u2192 '+badge('A1','ba')+' '+badge('A2','ba')+' / Retos \u2192 '+badge('A3','ba')+' '+badge('A4','ba')+'\nT2: Kings \u2192 '+badge('A3','ba')+' '+badge('A4','ba')+' / Retos \u2192 '+badge('A1','ba')+' '+badge('A2','ba');if(c==='in')return 'T1: Kings \u2192 '+badge('Inf Masc 1','bi')+' '+badge('Inf Masc 2','bi')+' / Retos \u2192 '+badge('Inf Masc 3','bi')+' '+badge('Inf Masc 4','bi')+'\nT2: Kings \u2192 '+badge('Inf Masc 3','bi')+' '+badge('Inf Masc 4','bi')+' / Retos \u2192 '+badge('Inf Masc 1','bi')+' '+badge('Inf Masc 2','bi');return 'T1: Kings \u2192 '+badge('Alev\u00edn Fem','bf')+' '+badge('Inf.Fem 1','bf')+' / Retos \u2192 '+badge('Inf.Fem 2','bf')+' '+badge('Cadet Fem','bf')+'\nT2: Kings \u2192 '+badge('Inf.Fem 2','bf')+' '+badge('Cadet Fem','bf')+' / Retos \u2192 '+badge('Alev\u00edn Fem','bf')+' '+badge('Inf.Fem 1','bf');}
+function renderCD(day){var c=document.getElementById('cdcont');c.innerHTML=day==='sab'?cdSab():day==='dom'?cdDom():cdWeek(day,DAYROT[day].M1,DAYROT[day].M2,DAYROT[day].M3);}
+function cdDom(){var h='<div class="sl">Llegada y bienvenida \u2014 todos juntos</div>';h+='<div class="gr"><div class="tm">8:00</div><div class="ce cb" style="grid-column:span 3"><div class="ct">\uD83D\uDE8C Salida bus \u2014 direcci\u00f3n campus</div></div></div>';h+='<div class="gr"><div class="tm">10:00</div><div class="ce ce2" style="grid-column:span 3"><div class="ct">\uD83C\uDFE0 Llegada \u00b7 instalaci\u00f3n \u00b7 fotos \u00b7 bienvenida</div></div></div>';h+='<div class="gr"><div class="tm">12:30</div><div class="ce cf" style="grid-column:span 3"><div class="ct">\uD83C\uDF7D Comida \u2014 todos</div></div></div>';h+='<div class="sl">Tarde \u2014 M1=Femenino \u00b7 M2=Inf.masc \u00b7 M3=Alev.masc</div>';h+='<div class="colh"><div></div><div class="ch ch1"><div class="el">M1 \u2014 Bolvir</div>'+cbh('fe')+'</div><div class="ch ch2"><div class="el">M2 \u2014 Campus</div>'+cbh('in')+'</div><div class="ch ch3"><div class="el">M3 \u2014 Bellver</div>'+cbh('al')+'</div></div>';h+='<div class="gr"><div class="tm">15:30</div><div class="ce cbv"><div class="ct">Tarde Bolvir 15:30\u201318:30</div><div class="al2"><span class="an">T1 Kings:</span>'+badge('Alev\u00edn Fem','bf')+badge('Inf.Fem 1','bf')+'</div><div class="al2"><span class="an">T1 Retos:</span>'+badge('Inf.Fem 2','bf')+badge('Cadet Fem','bf')+'</div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">16:00</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T1\u00b716:00\u201317:30</div>'+['Inf Masc 1','Inf Masc 2','Inf Masc 3','Inf Masc 4'].map(function(g,i){return '<div class="al2"><span class="an">'+['Gris','C\u00e9sped','Azul','Piscina'][i]+':</span>'+badge(g,'bi')+'</div>';}).join('')+'</div><div class="ce cbl"><div class="ct">T1\u00b716:00\u201317:30</div>'+['A1','A2','A3','A4'].map(function(g,i){return '<div class="al2"><span class="an">'+['Bellver','Voley','Hinch','D+P'][i]+':</span>'+badge(g,'ba')+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">17:30</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T2\u00b717:30\u201319:00</div>'+['Inf Masc 1','Inf Masc 2','Inf Masc 3','Inf Masc 4'].map(function(g,i){return '<div class="al2"><span class="an">'+['C\u00e9sped','Gris','Piscina','Azul'][i]+':</span>'+badge(g,'bi')+'</div>';}).join('')+'</div><div class="ce cbl"><div class="ct">T2\u00b717:30\u201319:00</div>'+['A1','A2','A3','A4'].map(function(g,i){return '<div class="al2"><span class="an">'+['Voley','Bellver','D+P','Hinch'][i]+':</span>'+badge(g,'ba')+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">18:30</div><div class="ce cb"><div class="ct">\uD83D\uDE8C Bus recoge Bolvir</div><div class="bgs"><span class="bf">Femenino</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">19:05</div><div class="ce em"></div><div class="ce em"></div><div class="ce cb"><div class="ct">\uD83D\uDE8C Bus recoge Bellver</div><div class="bgs"><span class="ba">Alev. masc.</span></div></div></div>';h+=cdN('fe','in','al','dom');return h;}
+function cdWeek(day,c1,c2,c3){var n={al:'Alev\u00edn masc.',in:'Infantil masc.',fe:'Femenino'};var m2s=SG[c2];var m3s=SG[c3];var h='<div class="colh"><div></div><div class="ch ch1"><div class="el">M1 \u2014 Bolvir</div>'+cbh(c1)+'</div><div class="ch ch2"><div class="el">M2 \u2014 Campus</div>'+cbh(c2)+'</div><div class="ch ch3"><div class="el">M3 \u2014 Bellver</div>'+cbh(c3)+'</div></div>';h+='<div class="sl">Ma\u00f1ana</div>';h+='<div class="gr"><div class="tm">8:00</div><div class="ce cf"><div class="ct">\uD83E\uDD50 Desayuno</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">8:15</div><div class="ce em"></div><div class="ce cf"><div class="ct">\uD83E\uDD50 Desayuno</div><div class="bgs"><span class="'+CB[c2]+'">'+n[c2]+'</span></div></div><div class="ce cf"><div class="ct">\uD83E\uDD50 Desayuno</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="gr"><div class="tm">8:45</div><div class="ce cb"><div class="ct">\uD83D\uDE8C \u2192 Bolvir</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">9:15</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T1\u00b79:15\u201310:45</div>'+m2s.map(function(g){return '<div class="al2"><span class="an">'+M2[c2].M1[g]+':</span>'+badge(g,CB[c2])+'</div>';}).join('')+'</div><div class="ce cb"><div class="ct">\uD83D\uDE8C \u2192 Bellver</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="gr"><div class="tm">9:30</div><div class="ce cbv"><div class="ct">Bolvir\u00b79:30\u201312:10</div><div class="al2"><span class="an">T1 Kings:</span>'+SG[c1].slice(0,2).map(function(g){return badge(g,CB[c1]);}).join('')+'</div><div class="al2"><span class="an">T1 Retos:</span>'+SG[c1].slice(2,4).map(function(g){return badge(g,CB[c1]);}).join('')+'</div></div><div class="ce em"></div><div class="ce cbl"><div class="ct">T1 Bellver\u00b79:30\u201310:45</div>'+m3s.map(function(g){return '<div class="al2"><span class="an">'+M3[c3].T1[g]+':</span>'+badge(g,CB[c3])+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">11:00</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T2\u00b711:00\u201312:30</div>'+m2s.map(function(g){return '<div class="al2"><span class="an">'+M2[c2].M2[g]+':</span>'+badge(g,CB[c2])+'</div>';}).join('')+'</div><div class="ce cbl"><div class="ct">T2 Bellver\u00b711:00\u201312:30</div>'+m3s.map(function(g){return '<div class="al2"><span class="an">'+M3[c3].T2[g]+':</span>'+badge(g,CB[c3])+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">12:10</div><div class="ce cb"><div class="ct">\uD83D\uDE8C Recoge Bolvir</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">12:40</div><div class="ce em"></div><div class="ce em"></div><div class="ce cb"><div class="ct">\uD83D\uDE8C Recoge Bellver</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="sl">Comida+Descanso</div>';h+='<div class="gr"><div class="tm">12:30</div><div class="ce cf"><div class="ct">\uD83C\uDF7D Comida</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce cf"><div class="ct">\uD83C\uDF7D Comida</div><div class="bgs"><span class="'+CB[c2]+'">'+n[c2]+'</span></div></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">12:45</div><div class="ce em"></div><div class="ce em"></div><div class="ce cf"><div class="ct">\uD83C\uDF7D Comida</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="gr"><div class="tm">13:15</div><div class="ce em"></div><div class="ce cd"><div class="ct">\uD83C\uDFCA Piscina albergue</div><div class="bgs"><span class="'+CB[c2]+'">'+n[c2]+'</span></div></div><div class="ce cd"><div class="ct">\uD83C\uDFD3 Ping pong</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="gr"><div class="tm">13:30</div><div class="ce cb"><div class="ct">\uD83D\uDE8C \u2192 Bolvir desc.</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">13:45</div><div class="ce cd"><div class="ct">\uD83C\uDFCA Piscina Bolvir</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">15:45</div><div class="ce em"></div><div class="ce em"></div><div class="ce cb"><div class="ct">\uD83D\uDE8C \u2192 Bellver tarde</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+='<div class="sl">Tarde</div>';h+='<div class="gr"><div class="tm">15:30</div><div class="ce cbv"><div class="ct">Bolvir\u00b715:30\u201318:30</div><div class="al2"><span class="an">T1 Kings:</span>'+SG[c1].slice(0,2).map(function(g){return badge(g,CB[c1]);}).join('')+'</div><div class="al2"><span class="an">T1 Retos:</span>'+SG[c1].slice(2,4).map(function(g){return badge(g,CB[c1]);}).join('')+'</div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">16:00</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T1 tarde\u00b716:00\u201317:30</div>'+m2s.map(function(g){return '<div class="al2"><span class="an">'+M2[c2].T1[g]+':</span>'+badge(g,CB[c2])+'</div>';}).join('')+'</div><div class="ce cbl"><div class="ct">T1 tarde\u00b716:00\u201317:30</div>'+m3s.map(function(g){return '<div class="al2"><span class="an">'+M3[c3].T1t[g]+':</span>'+badge(g,CB[c3])+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">17:30</div><div class="ce em"></div><div class="ce ccp"><div class="ct">T2 tarde\u00b717:30\u201319:00</div>'+m2s.map(function(g){return '<div class="al2"><span class="an">'+M2[c2].T2[g]+':</span>'+badge(g,CB[c2])+'</div>';}).join('')+'</div><div class="ce cbl"><div class="ct">T2 tarde\u00b717:30\u201319:00</div>'+m3s.map(function(g){return '<div class="al2"><span class="an">'+M3[c3].T2t[g]+':</span>'+badge(g,CB[c3])+'</div>';}).join('')+'</div></div>';h+='<div class="gr"><div class="tm">18:30</div><div class="ce cb"><div class="ct">\uD83D\uDE8C Recoge Bolvir</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div><div class="ce em"></div><div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">19:05</div><div class="ce em"></div><div class="ce em"></div><div class="ce cb"><div class="ct">\uD83D\uDE8C Recoge Bellver</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';h+=cdN(c1,c2,c3,day);return h;}
+function cdN(c1,c2,c3,day){var n={al:'Alev\u00edn',in:'Infantil',fe:'Femenino'};var iv=day==='vie';var nc1=NOCHES[c1][day];var nc2=NOCHES[c2][day];var nc3=NOCHES[c3][day];var h='<div class="sl">Noche</div>';h+='<div class="gr"><div class="tm">19:00</div><div class="ce cd" style="grid-column:span 3"><div class="ct">\uD83D\uDCDE Tiempo libre \u2014 todos</div></div></div>';h+='<div class="gr"><div class="tm">20:00</div>';h+=c1==='in'?'<div class="ce cf"><div class="ct">\uD83C\uDF7D Cena</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div>':'<div class="ce em"></div>';h+=(c2==='fe'||c2==='in')?'<div class="ce cf"><div class="ct">\uD83C\uDF7D Cena</div><div class="bgs"><span class="'+CB[c2]+'">'+n[c2]+'</span></div></div>':'<div class="ce em"></div>';h+='<div class="ce em"></div></div>';h+='<div class="gr"><div class="tm">20:15</div>';h+=c1!=='in'?'<div class="ce cf"><div class="ct">\uD83C\uDF7D Cena</div><div class="bgs"><span class="'+CB[c1]+'">'+n[c1]+'</span></div></div>':'<div class="ce em"></div>';h+=(c2!=='fe'&&c2!=='in')?'<div class="ce cf"><div class="ct">\uD83C\uDF7D Cena</div><div class="bgs"><span class="'+CB[c2]+'">'+n[c2]+'</span></div></div>':'<div class="ce em"></div>';h+='<div class="ce cf"><div class="ct">\uD83C\uDF7D Cena</div><div class="bgs"><span class="'+CB[c3]+'">'+n[c3]+'</span></div></div></div>';if(iv){h+='<div class="gr"><div class="tm">Noche</div><div class="ce cfi" style="grid-column:span 3"><div class="ct">\uD83C\uDFC6 FINAL NOCTURNA FUTSAL+BAILES \u2014 todos</div></div></div>';}else{h+='<div class="gr"><div class="tm">Noche</div><div class="ce cn"><div class="ct">'+nc1+'</div></div><div class="ce cn"><div class="ct">'+nc2+'</div></div><div class="ce cn"><div class="ct">'+nc3+'</div></div></div>';}h+='<div class="gr"><div class="tm">22:30</div><div class="ce cz" style="grid-column:span 3"><div class="ct">\uD83C\uDF19 A dormir \u2014 todos</div></div></div>';h+='<div class="gr"><div class="tm">22:40</div><div class="ce cr" style="grid-column:span 3"><div class="ct">\uD83D\uDCCB Reuni\u00f3n de monitores \u2014 Feedback del d\u00eda</div></div></div>';return h;}
+function cdSab(){var h='<div class="sl">Clausura \u2014 todos juntos</div>';h+='<div class="gr"><div class="tm">8:30</div><div class="ce cd" style="grid-column:span 3"><div class="ct">\u2600\uFE0F Despertar</div></div></div>';h+='<div class="gr"><div class="tm">9:00</div><div class="ce cf" style="grid-column:span 3"><div class="ct">\uD83E\uDD50 Desayuno</div></div></div>';h+='<div class="gr"><div class="tm">9:45</div><div class="ce ccl" style="grid-column:span 3"><div class="ct">\uD83C\uDFC5 Cloenda \u2014 Clausura del campus</div></div></div>';h+='<div class="gr"><div class="tm">11:00</div><div class="ce cb" style="grid-column:span 3"><div class="ct">\uD83D\uDE8C Salida buses \u2014 a casa \u00b7 \u00a1Hasta el pr\u00f3ximo campus!</div></div></div>';return h;}
+
+function renderGD(cat,day){document.getElementById({al:'alev-cont',in:'inf-cont',fe:'fem-cont'}[cat]).innerHTML=bldG(cat,day);}
+function gw(t,c,ti,de){return '<div class="tr2"><div class="tt">'+t+'</div><div class="tc '+c+'"><div class="tct">'+ti+'</div>'+(de?'<div class="tcd">'+de+'</div>':'')+'</div></div>';}
+function gs(t){return '<div class="sep">'+t+'</div>';}
+function bldG(cat,day){
+  var n=NOCHES[cat][day];var iv=(day==='vie');var r=[];
+  if(day==='sab'){r.push(gs('Clausura'));r.push(gw('8:30','gl2','\u2600\uFE0F Despertar',null));r.push(gw('9:00','gf2','\uD83E\uDD50 Desayuno',null));r.push(gw('9:45','gcl','\uD83C\uDFC5 Cloenda \u2014 Clausura del campus','Entrega de trofeos \u00b7 Despedida'));r.push(gw('11:00','gb','\uD83D\uDE8C Salida buses',null));return '<div class="gtl">'+r.join('')+'</div>';}
+  if(day==='dom'){
+    r.push(gs('Llegada \u2014 todos juntos'));r.push(gw('8:00','ge','\uD83D\uDE8C Salida bus \u2192 campus',null));r.push(gw('10:00','ge','\uD83C\uDFE0 Llegada \u00b7 instalaci\u00f3n \u00b7 fotos \u00b7 bienvenida',null));r.push(gw('12:30','gf2','\uD83C\uDF7D Comida',null));
+    if(cat==='fe'){r.push(gs('Tarde \u2014 M1 \u00b7 Bolvir'));r.push(gw('13:30','gb','\uD83D\uDE8C Bus sale \u2192 Bolvir',null));r.push(gw('15:30','gt','Tarde completa \u00b7 15:30\u201318:30',bolv('fe')));r.push(gw('18:30','gb','\uD83D\uDE8C Bus recoge',null));r.push(gs('Noche'));r.push(gw('19:00','gl2','\uD83D\uDCDE Tiempo libre',null));r.push(gw('20:15','gf2','\uD83C\uDF7D Cena',null));r.push(gw('Noche','gn','\uD83E\uDD69 Discoteca+Bingo',null));}
+    else if(cat==='in'){r.push(gs('Tarde \u2014 M2 \u00b7 Campus'));r.push(gw('16:00','gt','T1 \u00b7 16:00\u201317:30',SG.in.map(function(g){return g+'\u00b7'+MON[g]+' \u2192 '+M2.in.M1[g];}).join('\n')));r.push(gw('17:30','gt','T2 \u00b7 17:30\u201319:00',SG.in.map(function(g){return g+'\u00b7'+MON[g]+' \u2192 '+M2.in.M2[g];}).join('\n')));r.push(gs('Noche'));r.push(gw('19:00','gl2','\uD83D\uDCDE Tiempo libre',null));r.push(gw('20:00','gf2','\uD83C\uDF7D Cena',null));r.push(gw('Noche','gn','Kings League noche',null));}
+    else{r.push(gs('Tarde \u2014 M3 \u00b7 Bellver'));r.push(gw('15:45','gb','\uD83D\uDE8C Bus sale \u2192 Bellver',null));r.push(gw('16:00','gt','T1 \u00b7 16:00\u201317:30',SG.al.map(function(g){return g+'\u00b7'+MON[g]+' \u2192 '+M3.al.T1[g];}).join('\n')));r.push(gw('17:30','gt','T2 \u00b7 17:30\u201319:00',SG.al.map(function(g){return g+'\u00b7'+MON[g]+' \u2192 '+M3.al.T2[g];}).join('\n')));r.push(gw('19:05','gb','\uD83D\uDE8C Bus recoge',null));r.push(gs('Noche'));r.push(gw('19:00','gl2','\uD83D\uDCDE Tiempo libre',null));r.push(gw('20:15','gf2','\uD83C\uDF7D Cena',null));r.push(gw('Noche','gn','Din\u00e1micas+Coreograf\u00eda',null));}
+    r.push(gw('22:30','gz','\uD83C\uDF19 A dormir',null));r.push(gw('22:40','gr2','\uD83D\uDCCB Reuni\u00f3n de monitores',null));
+    return '<div class="gtl">'+r.join('')+'</div>';}
+  var modelo=MODEL[cat][day];
+  if(modelo==='M1'){r.push(gs('Ma\u00f1ana \u2014 M1 \u00b7 Bolvir'));r.push(gw('8:00','gf2','\uD83E\uDD50 Desayuno',null));r.push(gw('8:45','gb','\uD83D\uDE8C Bus \u2192 Bolvir',null));r.push(gw('9:30','gm2','Ma\u00f1ana \u00b7 9:30\u201312:10',bolv(cat)));r.push(gw('12:10','gb','\uD83D\uDE8C Bus recoge',null));r.push(gs('Comida y descanso'));r.push(gw('12:30','gf2','\uD83C\uDF7D Comida',null));r.push(gw('13:30','gb','\uD83D\uDE8C \u2192 Bolvir desc.',null));r.push(gw('13:45','gd','\uD83C\uDFCA Piscina Bolvir',null));r.push(gs('Tarde \u2014 M1 \u00b7 Bolvir'));r.push(gw('15:30','gt','Tarde \u00b7 15:30\u201318:30',bolv(cat)));r.push(gw('18:30','gb','\uD83D\uDE8C Bus recoge',null));}
+  else if(modelo==='M2'){r.push(gs('Ma\u00f1ana \u2014 M2 \u00b7 Campus'));r.push(gw('8:15','gf2','\uD83E\uDD50 Desayuno',null));r.push(gw('9:15','gm2','T1 \u00b7 9:15\u201310:45',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M2[cat].M1[g];}).join('\n')));r.push(gw('11:00','gm2','T2 \u00b7 11:00\u201312:30',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M2[cat].M2[g];}).join('\n')));r.push(gs('Comida y descanso'));r.push(gw('12:30','gf2','\uD83C\uDF7D Comida',null));r.push(gw('13:15','gd','\uD83C\uDFCA Piscina albergue',null));r.push(gs('Tarde \u2014 M2 \u00b7 Campus'));r.push(gw('16:00','gt','T1 tarde \u00b7 16:00\u201317:30',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M2[cat].T1[g];}).join('\n')));r.push(gw('17:30','gt','T2 tarde \u00b7 17:30\u201319:00',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M2[cat].T2[g];}).join('\n')));}
+  else{r.push(gs('Ma\u00f1ana \u2014 M3 \u00b7 Bellver'));r.push(gw('8:15','gf2','\uD83E\uDD50 Desayuno',null));r.push(gw('9:15','gb','\uD83D\uDE8C \u2192 Bellver',null));r.push(gw('9:30','gm2','T1 \u00b7 9:30\u201310:45',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M3[cat].T1[g];}).join('\n')));r.push(gw('11:00','gm2','T2 \u00b7 11:00\u201312:30',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M3[cat].T2[g];}).join('\n')));r.push(gw('12:40','gb','\uD83D\uDE8C Bus recoge',null));r.push(gs('Comida y descanso'));r.push(gw('12:45','gf2','\uD83C\uDF7D Comida',null));r.push(gw('13:15','gd','\uD83C\uDFD3 Ping pong',null));r.push(gs('Tarde \u2014 M3 \u00b7 Bellver'));r.push(gw('15:45','gb','\uD83D\uDE8C \u2192 Bellver tarde',null));r.push(gw('16:00','gt','T1 tarde \u00b7 16:00\u201317:30',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M3[cat].T1t[g];}).join('\n')));r.push(gw('17:30','gt','T2 tarde \u00b7 17:30\u201319:00',SG[cat].map(function(g){return g+'\u00b7'+(MON[g]||'')+' \u2192 '+M3[cat].T2t[g];}).join('\n')));r.push(gw('19:05','gb','\uD83D\uDE8C Bus recoge',null));}
+  r.push(gs('Noche'));r.push(gw('19:00','gl2','\uD83D\uDCDE Tiempo libre',null));
+  var ch=(modelo==='M2'&&(cat==='fe'||cat==='in'))?'20:00':'20:15';
+  r.push(gw(ch,'gf2','\uD83C\uDF7D Cena',null));
+  if(iv)r.push(gw('Noche','gfi','\uD83C\uDFC6 FINAL NOCTURNA FUTSAL+BAILES \u2014 todos',null));
+  else r.push(gw('Noche','gn',n,null));
+  r.push(gw('22:30','gz','\uD83C\uDF19 A dormir',null));r.push(gw('22:40','gr2','\uD83D\uDCCB Reuni\u00f3n de monitores',null));
+  return '<div class="gtl">'+r.join('')+'</div>';}
+
+// BUSCADOR
+var AG=['A1','A2','A3','A4','Inf Masc 1','Inf Masc 2','Inf Masc 3','Inf Masc 4','Alev\u00edn Fem','Inf.Fem 1','Inf.Fem 2','Cadet Fem'];
+var bG=null,bD=0;
+function gcat(g){if(['A1','A2','A3','A4'].includes(g))return 'al';if(g.startsWith('Inf Masc'))return 'in';return 'fe';}
+function bDo(v){var vl=v.trim().toLowerCase();if(MON_INV[vl]){bRen(MON_INV[vl]);return;}var m=AG.find(function(g){return g.toLowerCase().includes(vl);});if(m)bRen(m);else{bG=null;document.getElementById('bres').innerHTML='<div class="nores">No se encontr\u00f3 ning\u00fan grupo o monitor</div>';}}
+function bSel(g){document.getElementById('bsearch').value=g;bRen(g);}
+function bRen(g){bG=g;bD=0;var c=gcat(g);var m=MON[g]||'';var h='<div class="ghead"><span class="gbadge" style="'+CATCOL[c]+'">'+g+'</span><span class="gname">'+CATNAMES[c]+'</span><span class="gmon">&middot; Monitor: <strong>'+m+'</strong></span></div><div class="ddtabs">';DL.forEach(function(d,i){h+='<button class="ddt'+(i===0?' active':'')+'" onclick="bSw('+i+',this)">'+d+'</button>';});h+='</div><div class="bsched" id="bsc">'+bldB(g,0)+'</div>';document.getElementById('bres').innerHTML=h;}
+function bSw(i,btn){bD=i;document.querySelectorAll('#bres .ddt').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.getElementById('bsc').innerHTML=bldB(bG,i);}
+function br(t,c,ti,de){return '<div class="brow"><div class="btm">'+t+'</div><div class="bcard '+c+'"><div class="btt">'+ti+'</div>'+(de?'<div class="btd">'+de+'</div>':'')+'</div></div>';}
+function bs(t){return '<div class="bsep">'+t+'</div>';}
+function bldB(g,di){var day=DK[di];var cat=gcat(g);var m=MON[g]||g;
+  if(di===6){return[bs('Clausura'),br('8:30','bli','\u2600\uFE0F Despertar',null),br('9:00','bfa','\uD83E\uDD50 Desayuno',null),br('9:45','bclo','\uD83C\uDFC5 Cloenda','Trofeos \u00b7 Despedida'),br('11:00','bbus','\uD83D\uDE8C Salida buses',null)].join('');}
+  var n=NOCHES[cat][day];var iv=(day==='vie');var r=[];
+  if(di===0){
+    r.push(bs('Llegada'));r.push(br('8:00','besp','\uD83D\uDE8C Salida bus \u2192 campus',null));r.push(br('10:00','besp','\uD83C\uDFE0 Llegada \u00b7 instalaci\u00f3n \u00b7 fotos',null));r.push(br('12:30','bfa','\uD83C\uDF7D Comida',null));
+    if(cat==='fe'){r.push(bs('Tarde \u2014 M1 \u00b7 Bolvir'));r.push(br('13:30','bbus','\uD83D\uDE8C Bus \u2192 Bolvir',null));r.push(br('15:30','bta','Tarde \u00b7 15:30\u201318:30',null));r.push(br('18:30','bbus','\uD83D\uDE8C Bus recoge',null));r.push(bs('Noche'));r.push(br('19:00','bli','\uD83D\uDCDE Tiempo libre',null));r.push(br('20:15','bfa','\uD83C\uDF7D Cena',null));r.push(br('Noche','bnoc','\uD83E\uDD69 Discoteca+Bingo',null));}
+    else if(cat==='in'){r.push(bs('Tarde \u2014 M2 \u00b7 Campus'));r.push(br('16:00','bta','T1 \u00b7 16:00\u201317:30',g+'\u00b7'+m+' \u2192 '+M2.in.M1[g]));r.push(br('17:30','bta','T2 \u00b7 17:30\u201319:00',g+'\u00b7'+m+' \u2192 '+M2.in.M2[g]));r.push(bs('Noche'));r.push(br('19:00','bli','\uD83D\uDCDE Tiempo libre',null));r.push(br('20:00','bfa','\uD83C\uDF7D Cena',null));r.push(br('Noche','bnoc','Kings League noche',null));}
+    else{r.push(bs('Tarde \u2014 M3 \u00b7 Bellver'));r.push(br('15:45','bbus','\uD83D\uDE8C Bus \u2192 Bellver',null));r.push(br('16:00','bta','T1 \u00b7 16:00\u201317:30',g+'\u00b7'+m+' \u2192 '+M3.al.T1[g]));r.push(br('17:30','bta','T2 \u00b7 17:30\u201319:00',g+'\u00b7'+m+' \u2192 '+M3.al.T2[g]));r.push(br('19:05','bbus','\uD83D\uDE8C Bus recoge',null));r.push(bs('Noche'));r.push(br('19:00','bli','\uD83D\uDCDE Tiempo libre',null));r.push(br('20:15','bfa','\uD83C\uDF7D Cena',null));r.push(br('Noche','bnoc','Din\u00e1micas+Coreograf\u00eda',null));}
+    r.push(br('22:30','bdor','\uD83C\uDF19 A dormir',null));r.push(br('22:40','breu','\uD83D\uDCCB Reuni\u00f3n de monitores',null));return r.join('');}
+  var mo=MODEL[cat][day];
+  if(mo==='M1'){r.push(bs('Ma\u00f1ana \u2014 M1 \u00b7 Bolvir'));r.push(br('8:00','bfa','\uD83E\uDD50 Desayuno',null));r.push(br('8:45','bbus','\uD83D\uDE8C Bus \u2192 Bolvir',null));r.push(br('9:30','bm','Ma\u00f1ana \u00b7 9:30\u201312:10',null));r.push(br('12:10','bbus','\uD83D\uDE8C Bus recoge',null));r.push(bs('Comida y descanso'));r.push(br('12:30','bfa','\uD83C\uDF7D Comida',null));r.push(br('13:30','bbus','\uD83D\uDE8C \u2192 Bolvir desc.',null));r.push(br('13:45','bdes','\uD83C\uDFCA Piscina Bolvir',null));r.push(bs('Tarde \u2014 M1 \u00b7 Bolvir'));r.push(br('15:30','bta','Tarde \u00b7 15:30\u201318:30',null));r.push(br('18:30','bbus','\uD83D\uDE8C Bus recoge',null));}
+  else if(mo==='M2'){r.push(bs('Ma\u00f1ana \u2014 M2 \u00b7 Campus'));r.push(br('8:15','bfa','\uD83E\uDD50 Desayuno',null));r.push(br('9:15','bm','T1 \u00b7 9:15\u201310:45',g+'\u00b7'+m+' \u2192 '+M2[cat].M1[g]));r.push(br('11:00','bm','T2 \u00b7 11:00\u201312:30',g+'\u00b7'+m+' \u2192 '+M2[cat].M2[g]));r.push(bs('Comida y descanso'));r.push(br('12:30','bfa','\uD83C\uDF7D Comida',null));r.push(br('13:15','bdes','\uD83C\uDFCA Piscina albergue',null));r.push(bs('Tarde \u2014 M2 \u00b7 Campus'));r.push(br('16:00','bta','T1 tarde \u00b7 16:00\u201317:30',g+'\u00b7'+m+' \u2192 '+M2[cat].T1[g]));r.push(br('17:30','bta','T2 tarde \u00b7 17:30\u201319:00',g+'\u00b7'+m+' \u2192 '+M2[cat].T2[g]));}
+  else{r.push(bs('Ma\u00f1ana \u2014 M3 \u00b7 Bellver'));r.push(br('8:15','bfa','\uD83E\uDD50 Desayuno',null));r.push(br('9:15','bbus','\uD83D\uDE8C \u2192 Bellver',null));r.push(br('9:30','bm','T1 \u00b7 9:30\u201310:45',g+'\u00b7'+m+' \u2192 '+M3[cat].T1[g]));r.push(br('11:00','bm','T2 \u00b7 11:00\u201312:30',g+'\u00b7'+m+' \u2192 '+M3[cat].T2[g]));r.push(br('12:40','bbus','\uD83D\uDE8C Bus recoge',null));r.push(bs('Comida y descanso'));r.push(br('12:45','bfa','\uD83C\uDF7D Comida',null));r.push(br('13:15','bdes','\uD83C\uDFD3 Ping pong',null));r.push(bs('Tarde \u2014 M3 \u00b7 Bellver'));r.push(br('15:45','bbus','\uD83D\uDE8C \u2192 Bellver tarde',null));r.push(br('16:00','bta','T1 tarde \u00b7 16:00\u201317:30',g+'\u00b7'+m+' \u2192 '+M3[cat].T1t[g]));r.push(br('17:30','bta','T2 tarde \u00b7 17:30\u201319:00',g+'\u00b7'+m+' \u2192 '+M3[cat].T2t[g]));r.push(br('19:05','bbus','\uD83D\uDE8C Bus recoge',null));}
+  r.push(bs('Noche'));r.push(br('19:00','bli','\uD83D\uDCDE Tiempo libre',null));
+  var ch=(mo==='M2'&&(cat==='fe'||cat==='in'))?'20:00':'20:15';
+  r.push(br(ch,'bfa','\uD83C\uDF7D Cena',null));
+  if(iv)r.push(br('Noche','bfin','\uD83C\uDFC6 FINAL NOCTURNA FUTSAL+BAILES',null));
+  else r.push(br('Noche','bnoc',n,null));
+  r.push(br('22:30','bdor','\uD83C\uDF19 A dormir',null));r.push(br('22:40','breu','\uD83D\uDCCB Reuni\u00f3n de monitores',null));
+  return r.join('');}
+
+setTimeout(function(){renderCD('dom');renderGD('al','dom');renderGD('in','dom');renderGD('fe','dom');},50);
+</script>
+</body>
+</html>
